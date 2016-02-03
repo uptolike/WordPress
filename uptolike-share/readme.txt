@@ -7,7 +7,9 @@ Stable tag: 1.4.5
 Uptolike Social Share Buttons - social bookmarking widget with sharing statistics.
 
 == Description ==
+
 **What Can You Do With UpToLike Social Share Buttons?**
+
 * Create custom buttons that will visually appeal to users
 * Easily manage social activity online
 * Increase online engagement through Shares and Likes
@@ -65,7 +67,6 @@ Uptolike поддерживает 25 популярных социальных �
 **Уникальные фишки Uptolike**
 
 * Полная кастомизация социальных кнопок:
-
     1. 3 формы
     2. 3 размера
     3. эффект при наведении (увеличение, поворот по часовой стрелке)

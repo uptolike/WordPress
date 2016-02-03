@@ -1,21 +1,17 @@
 <?php
-
-/* 1.4.4 11/08/15 */
+/* 1.4.5 03/02/16 */
 
 function constructorIframe($projectId, $partnerId, $mail, $cryptKey)
 {
-
     $params = array('mail' => $mail,
         'partner' => $partnerId,
         'projectId' => $projectId);
-
     $paramsStr = 'mail=' . $mail . '&partner=' . $partnerId . '&projectId=' . $projectId . $cryptKey;
     $signature = md5($paramsStr);
     $params['signature'] = $signature;
     if ('' !== $cryptKey) {
         $finalUrl = 'https://uptolike.com/api/constructor.html?' . http_build_query($params);
     } else $finalUrl = 'https://uptolike.com/api/constructor.html';
-
 
     return $finalUrl;
 }
@@ -38,9 +34,7 @@ function statIframe($projectId, $partnerId, $mail, $cryptKey)
 
 function usb_admin_page()
 {
-
     $options = get_option('my_option_name');
-
     if ((isset($options['uptolike_email'])) && ('' !== $options['uptolike_email'])) {
         $email = $options['uptolike_email'];
     } else $email = get_option('admin_email');
@@ -52,7 +46,6 @@ function usb_admin_page()
     if (is_array($options) && array_key_exists('id_number', $options)) {
         $cryptKey = $options['id_number'];
     } else $cryptKey = '';
-
     ?>
     <script type="text/javascript">
         <?php include('main.js'); ?>
@@ -63,11 +56,9 @@ function usb_admin_page()
     <div id="uptolike_site_url" style="display: none"><?php echo get_site_url(); ?></div>
     <div class="wrap">
         <h2 class="placeholder">&nbsp;</h2>
-
         <div id="wrapper">
             <form id="settings_form" method="post" action="options.php">
-                <H1> UpToLike виджет</H1>
-
+                <h1>UpToLike виджет</h1>
                 <h2 class="nav-tab-wrapper">
                     <a class="nav-tab nav-tab-active" href="#" id="construct">
                         Конструктор
@@ -75,12 +66,10 @@ function usb_admin_page()
                     <a class="nav-tab" href="#" id="stat">
                         Статистика
                     </a>
-
                     <a class="nav-tab" href="#" id="settings">
                         Настройки
                     </a>
                 </h2>
-
                 <div class="wrapper-tab active" id="con_construct">
                     <iframe id='cons_iframe' style='height: 445px;width: 100%;'
                             data-src="<?php echo constructorIframe($projectId, $partnerId, $email, $cryptKey); ?>"></iframe>
@@ -90,11 +79,9 @@ function usb_admin_page()
                     </a>
                 </div>
                 <div class="wrapper-tab" id="con_stat">
-
                     <iframe style="width: 100%;height: 380px;" id="stats_iframe"
                             data-src="<?php echo statIframe($projectId, $partnerId, $email, $cryptKey); ?>">
                     </iframe>
-
                     <div id="before_key_req">Введите ваш адрес электронной почты для получения
                         ключа.
                     </div>
@@ -106,7 +93,6 @@ function usb_admin_page()
                         В письме пришлите, пожалуйста, адрес вашего сайта и адрес электронной почты,
                         указанный в плагине.<br/>
                     </div>
-
                     <table style="padding: 10px 0px;">
                         <tr id="email_tr">
                             <td>Email:</td>
@@ -141,12 +127,8 @@ function usb_admin_page()
                     </table>
                     <div>Обратная связь: <a href="mailto:uptolikeshare@gmail.com">uptolikeshare@gmail.com</a>
                     </div>
-
-
                 </div>
-
                 <div class="wrapper-tab " id="con_settings">
-
                     <div class="utl_left_block">
                         <?php
                         $my_settings_page = new MySettingsPage();
@@ -154,15 +136,10 @@ function usb_admin_page()
                         settings_fields('my_option_group');
                         do_settings_sections($my_settings_page->settings_page_name);
                         ?>
-
                         <input type="submit" name="submit_btn" value="Cохранить изменения">
-
                         <br>
-
                     </div>
-
                     <div class="utl_right_block">
-
                         <div class="utl_blok1">
                             <div class="utl_blok2">
                                 <div class="utl_logo utl_i_logo">
@@ -200,10 +177,7 @@ function usb_admin_page()
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-
             </form>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <?php
 
 //widget_options.php
-//1.4.4 11/08/15
+//1.4.5 03/02/16
 class MySettingsPage
 {
 
@@ -63,18 +63,15 @@ class MySettingsPage
      */
     public function constructorIframe($projectId, $partnerId, $mail, $cryptKey)
     {
-
         $params = array('mail' => $mail,
             'partner' => $partnerId,
             'projectId' => $projectId);
-
         $paramsStr = 'mail=' . $mail . '&partner=' . $partnerId . '&projectId=' . $projectId . $cryptKey;
         $signature = md5($paramsStr);
         $params['signature'] = $signature;
         if ('' !== $cryptKey) {
             $finalUrl = 'https://uptolike.com/api/constructor.html?' . http_build_query($params);
         } else $finalUrl = 'https://uptolike.com/api/constructor.html';
-
 
         return $finalUrl;
     }
@@ -95,18 +92,14 @@ class MySettingsPage
         foreach ($tabs as $tab => $name) {
             $class = ($tab == $current) ? ' nav-tab-active' : '';
             echo "<a class='nav-tab$class' href='#' id=" . $tab . " ref='?page=" . $this->settings_page_name . "&tab=$tab'>$name</a>";
-
         }
         echo '</h2>';
     }
 
-    /** render html page with code configuration settings
-
-     */
+    //render html page with code configuration settings
     public function create_admin_page()
     {
         $this->options = get_option('my_option_name');
-
         if ((isset($this->options['uptolike_email'])) && ('' !== $this->options['uptolike_email'])) {
             $email = $this->options['uptolike_email'];
         } else $email = get_option('admin_email');
@@ -128,7 +121,6 @@ class MySettingsPage
         <div id="uptolike_site_url" style="display: none"><?php echo get_site_url(); ?></div>
         <div class="wrap">
             <h2 class="placeholder">&nbsp;</h2>
-
             <div id="wrapper">
                 <form id="settings_form" method="post" action="options.php">
                     <H1>UpToLike виджет</H1>
@@ -155,11 +147,9 @@ class MySettingsPage
                         </a>
                     </div>
                     <div class="wrapper-tab" id="con_stat">
-
                         <iframe style="width: 100%;height: 380px;" id="stats_iframe"
                                 data-src="<?php echo $this->statIframe($projectId, $partnerId, $email, $cryptKey); ?>">
                         </iframe>
-
                         <div id="before_key_req">Введите ваш адрес электронной почты для получения
                             ключа.
                         </div>
@@ -172,8 +162,6 @@ class MySettingsPage
                             почты,
                             указанный в плагине.<br/>
                         </div>
-
-
                         <table style="padding: 10px 0px;">
                             <tr id="email_tr">
                                 <td>Email:</td>
@@ -209,7 +197,6 @@ class MySettingsPage
                         <div>Обратная связь: <a href="mailto:uptolikeshare@gmail.com">uptolikeshare@gmail.com</a>
                         </div>
                     </div>
-
                     <div class="wrapper-tab" id="con_settings">
                         <div class="utl_left_block">
                             <?php
@@ -219,7 +206,6 @@ class MySettingsPage
                             <input type="submit" name="submit_btn" value="Cохранить изменения">
                             <br>
                         </div>
-
                         <div class="utl_right_block">
                             <div class="utl_blok1">
                                 <div class="utl_blok2">
@@ -395,11 +381,11 @@ class MySettingsPage
         );
     }
 
-    /**
-     * Sanitize each setting field as needed
-     *
-     * @param array $input Contains all settings fields as array keys
-     */
+/**
+* Sanitize each setting field as needed
+*
+* @param array $input Contains all settings fields as array keys
+*/
     public function sanitize($input)
     {
         $new_input = array();
@@ -452,7 +438,6 @@ class MySettingsPage
 
         if (isset($input['utl_language']))
             $new_input['utl_language'] = $input['utl_language'];
-
 
         if (isset($input['uptolike_json']))
             $new_input['uptolike_json'] = $input['uptolike_json'];
@@ -645,9 +630,7 @@ class MySettingsPage
 
     public function uptolike_utl_language_callback()
     {
-        // $top = $bottom = $both = $default = '';
         $ru = $en = $ua = $de = $es = $it = $pl = $lt = $default = '';
-
 
         if (isset($this->options['utl_language'])) {
             if ('ru' == $this->options['utl_language']) {
@@ -673,7 +656,6 @@ class MySettingsPage
             $my_options = get_option('my_option_name');
             $my_options['utl_language'] = 'ru'; // cryptkey store
             update_option('my_option_name', $my_options);
-            //$ru = "selected='selected'";
         }
         //$default = "selected='selected'";
         echo "<select id='widget_position' name='my_option_name[utl_language]'>
@@ -686,10 +668,7 @@ class MySettingsPage
                     <option {$pl} value='pl'>Латвийский</option>
                     <option {$lt} value='lt'>Польский</option>
               </select>";
-
     }
-
-
 }
 
 function get_widget_code($url = '')
@@ -705,35 +684,25 @@ function get_widget_code($url = '')
 
     $domain = preg_replace('/^www\./', '', get_site_url());
     $data_pid = 'cms' . str_replace(array('https://', 'http://', '.', '-'), '', $domain);
-
     $widget_code = str_replace('data-pid="-1"', 'data-pid="' . $data_pid . '"', $widget_code);
     $widget_code = str_replace('data-pid=""', 'data-pid="' . $data_pid . '"', $widget_code);
     $widget_code = str_replace('div data', 'div data-url="' . $url . '" data', $widget_code);
     $align = $options['widget_align'];
-
     $align_style = 'style="text-align: ' . $align . ';"';
     $widget_code = str_replace('div data-', 'div data-lang="' . $options['utl_language'] . '" data-', $widget_code);
     $widget_code = str_replace('<div ', '<div ' . $align_style . ' ', $widget_code);
 
     return $widget_code;
-
 }
 
 function add_widget($content)
 {
-
     //echo
     $options = get_option('my_option_name');
-
-
     $widget_mode = $options['widget_mode'];
 
-
     if (is_array($options) && (($widget_mode == 'plg') or ($widget_mode == 'both')) && array_key_exists('widget_code', $options)) {
-
-
         //$widget_code = get_widget_code();
-
         if (is_page()) {//это страница
             if ($options['on_page'] == 1) {
                 switch ($options['widget_position']) {
@@ -785,17 +754,13 @@ function add_widget($content)
 
 add_filter('the_content', 'add_widget', 100);
 
-
 function uptolike_shortcode($atts)
 {
-
     $options = get_option('my_option_name');
     $widget_mode = $options['widget_mode'];
     if (($widget_mode == 'code') or ($widget_mode == 'both')) {
         return get_widget_code();
     };
-
-
 }
 
 add_shortcode('uptolike', 'uptolike_shortcode');
@@ -875,21 +840,16 @@ function set_default_code()
 <div data-url data-background-alpha="0.0" data-orientation="horizontal" data-text-color="000000" data-share-shape="round-rectangle" data-buttons-color="ff9300" data-sn-ids="fb.tw.ok.vk.gp.mr." data-counter-background-color="ffffff" data-share-counter-size="11" data-share-size="30" data-background-color="ededed" data-share-counter-type="common" data-pid data-counter-background-alpha="1.0" data-share-style="1" data-mode="share" data-following-enable="false" data-like-text-enable="false" data-selection-enable="true" data-icon-color="ffffff" class="uptolike-buttons">
 </div>
 EOD;
-
     $code = str_replace('data-pid', 'data-pid="' . $data_pid . '"', $code);
-
     $code = str_replace('data-url', 'data-url="' . $data_url . '"', $code);
     $options['widget_code'] = $code;
     $options['on_main_static'] = 1;
-
     $options['on_main'] = 1;
     $options['on_page'] = 0;
     $options['on_special_pages'] = 1;
     $options['on_archive'] = 1;
     $options['widget_position'] = 'bottom';
     $options['widget_align'] = 'left';
-
-
     update_option('my_option_name', $options);
 }
 
@@ -905,14 +865,11 @@ function choice_helper($choice)
 
 function usb_admin_actions()
 {
-
     if (current_user_can('manage_options')) {
         if (function_exists('add_meta_box')) {
 
             add_menu_page("UpToLike", "UpToLike", "manage_options", "UpToLike", 'my_custom_menu_page', plugins_url('uptolike-share/logo-small.png'));
         }
-
-
     }
 }
 
@@ -926,7 +883,6 @@ function headeruptolike()
 
     $options = get_option('my_option_name');
     if ($options['on_special_pages'] == 1) {
-
         //echo 'run on spec pages';
         $in_content = array(0, 1);
         $in_fixed_block = array(2, 3, 4, 5);
@@ -934,8 +890,6 @@ function headeruptolike()
         if (in_array($curr_value, $in_content)) {
             // echo 'in content';
         } elseif (in_array($curr_value, $in_fixed_block)) {
-
-
             if (is_page()) {//это страница
                 if ($options['on_page'] == 1)
                     echo get_widget_code();
@@ -955,7 +909,6 @@ function headeruptolike()
 
 class UptolikeWidget extends WP_Widget
 {
-
     function UptolikeWidget()
     {
         // Instantiate the parent object
@@ -985,7 +938,6 @@ function uptolike_register_widgets()
     register_widget('UptolikeWidget');
 }
 
-
 register_activation_hook(__FILE__, 'usb_admin_actions');
 register_deactivation_hook(__FILE__, 'usb_admin_actions_remove');
 
@@ -998,22 +950,18 @@ add_action('admin_notices', 'my_choice_notice');
 add_action('admin_notices', 'my_widgetcode_notice');
 add_action('admin_menu', 'usb_admin_actions');
 
-
 $options = get_option('my_option_name');
 
 if (is_admin()) {
     $options = get_option('my_option_name');
-
     if (array_key_exists('regme', $_REQUEST)) {
         try_reg();
     }
     if (array_key_exists('choice', $_REQUEST)) {
         choice_helper($_REQUEST['choice']);
     }
-
     $my_settings_page = new MySettingsPage();
     if (is_bool($options) OR (!array_key_exists('widget_code', $options)) OR ('' == $options['widget_code'])) {
         set_default_code();
     }
-
 }

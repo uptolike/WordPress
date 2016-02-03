@@ -1,13 +1,12 @@
 <?php
 /*
-Plugin Name: UpToLike Social Share Buttons
-Plugin URI: http://uptolike.ru/
-Description: Uptolike Social Share Buttons - social bookmarking widget with sharing statistics.
-Version: 1.4.4
-Author: Uptolike
-Author URI: http://uptolike.ru/
+Plugin Name:    UpToLike Social Share Buttons
+Plugin URI:     https://uptolike.com/
+Description:    Uptolike Social Share Buttons - social bookmarking widget with sharing statistics.
+Version:        1.4.5
+Author:         Uptolike Team
+Author URI:     https://uptolike.com/
 */
-
 
 // Creating the widget 
 

@@ -1,15 +1,13 @@
 === Uptolike Social Share Buttons ===
-Contributors: na1vez
 Tags: +1, UpToLike, AddThis, social buttons, bookmark, bookmarking, like, share, share button, sharing, social bookmarking, social bookmarks, social buttons, кнопки соцсетей, социальные кнопки
 Requires at least: 3.0.1
-Tested up to: 4.2.2
-Stable tag: 1.4.4
+Tested up to: 4.4.2
+Stable tag: 1.4.5
 
 Uptolike Social Share Buttons - social bookmarking widget with sharing statistics.
 
 == Description ==
 **What Can You Do With UpToLike Social Share Buttons?**
-
 * Create custom buttons that will visually appeal to users
 * Easily manage social activity online
 * Increase online engagement through Shares and Likes
@@ -27,18 +25,16 @@ UpToLike is compatible with 25 popular social networking sites. It supports the 
 **Unique Functions of UpToLike Social Share Buttons**
 
 * Customization of social buttons:
-
-  1. 3 different shapes
-  2. 3 sizes
-  3. Hover effect (increase, clockwise rotation)
-  4. 14 button styles
-  5. Button background
-  6. Text color
-  7. Text size of the counter
+    1. 3 different shapes
+    2. 3 sizes
+    3. Hover effect (increase, clockwise rotation)
+    4. 14 button styles
+    5. Button background
+    6. Text color
+    7. Text size of the counter
 
 * Social Media Following
 * Automatic text selection: the system gives you the option to share a highlighted piece of text on a social network
-
 * Gathering unique statistics of social media activity
 
 **What statistics does UpToLike collect?**
@@ -120,6 +116,10 @@ Answers to Frequently Asked Questions you can find at http://uptolike.ru/faq
 3. Traffic and sharing statistics
 
 == Changelog ==
+= 1.4.5 =
+* Code refactor
+* Minor fix
+
 = 1.4.4 =
 * Bug fix
 

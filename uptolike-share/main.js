@@ -91,7 +91,7 @@ function regMe(my_mail) {
     dataURL = "http://uptolike.com/api/getCryptKeyWithUserReg.json";
     jQuery.getJSON(dataURL + "?" + str + "&callback=?", {}, function (result) {
         var jsonString = JSON.stringify(result);
-        var result = JSON.parse(jsonString);
+        result = JSON.parse(jsonString);
         if ('ALREADY_EXISTS' == result.statusCode) {
             alert('Пользователь с таким email уже зарегистрирован, обратитесь в службу поддержки.');
         } else if ('MAIL_SENDED' == result.statusCode) {
@@ -126,7 +126,6 @@ jQuery(document).ready(function () {
 
     if (($('table input#uptolike_email').val() != '') && ($('table input.id_number').val() == '')) {
         hashChange('#stat');
-
     }
 
     $('input.id_number').css('width', '520px');//fix

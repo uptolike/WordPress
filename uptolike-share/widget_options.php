@@ -121,6 +121,7 @@ class MySettingsPage
         <div id="uptolike_site_url" style="display: none"><?php echo get_site_url(); ?></div>
         <div class="wrap">
             <h2 class="placeholder">&nbsp;</h2>
+
             <div id="wrapper">
                 <form id="settings_form" method="post" action="options.php">
                     <H1>UpToLike виджет</H1>
@@ -381,11 +382,11 @@ class MySettingsPage
         );
     }
 
-/**
-* Sanitize each setting field as needed
-*
-* @param array $input Contains all settings fields as array keys
-*/
+    /**
+     * Sanitize each setting field as needed
+     *
+     * @param array $input Contains all settings fields as array keys
+     */
     public function sanitize($input)
     {
         $new_input = array();
@@ -444,7 +445,6 @@ class MySettingsPage
 
         return $new_input;
     }
-
 
     public function print_section_info()
     {
@@ -865,6 +865,7 @@ function choice_helper($choice)
 
 function usb_admin_actions()
 {
+    delete_option('my_option_name');
     if (current_user_can('manage_options')) {
         if (function_exists('add_meta_box')) {
 
@@ -880,7 +881,6 @@ function my_custom_menu_page()
 
 function headeruptolike()
 {
-
     $options = get_option('my_option_name');
     if ($options['on_special_pages'] == 1) {
         //echo 'run on spec pages';
@@ -902,7 +902,6 @@ function headeruptolike()
             } else {
                 echo get_widget_code();
             };
-            //echo 'in_fixed_block';
         }
     }
 }
@@ -939,12 +938,10 @@ function uptolike_register_widgets()
 }
 
 register_activation_hook(__FILE__, 'usb_admin_actions');
-register_deactivation_hook(__FILE__, 'usb_admin_actions_remove');
 
 add_action('widgets_init', 'uptolike_register_widgets');
 
 add_action('wp_footer', 'headeruptolike', 1);
-
 
 add_action('admin_notices', 'my_choice_notice');
 add_action('admin_notices', 'my_widgetcode_notice');

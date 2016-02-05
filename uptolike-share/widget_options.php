@@ -1,5 +1,4 @@
 <?php
-
 //widget_options.php
 //1.4.5 03/02/16
 class MySettingsPage
@@ -744,7 +743,7 @@ function my_choice_notice()
     $options = get_option('my_option_name');
     if (is_bool($options) or (('' == $options['id_number']) and ((!array_key_exists('choice', $options)) OR ('ignore' !== $options['choice'])))) {
         echo "<div class='updated' style='
-    background: #fff url(//uptolike.ru/img/logo.png) no-repeat 2px;
+    background: #fff url(//uptolike.com/img/logo.png) no-repeat 2px;
     padding-left: 50px;
     padding-top: 15px;
     padding-bottom: 15px;'>Кнопки Uptolike успешно установлены! <a href='options-general.php?page=uptolike_settings&choice=ignore' style='float: right;'>Закрыть</a></div>";

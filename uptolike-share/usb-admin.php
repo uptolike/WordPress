@@ -1,6 +1,6 @@
 <?php
 
-/* 1.4.4 11/08/15 */
+/* 1.4.5 03/02/16 */
 
 function constructorIframe($projectId, $partnerId, $mail, $cryptKey)
 {

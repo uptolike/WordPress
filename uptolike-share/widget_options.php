@@ -643,7 +643,7 @@ function add_widget($content)
     if (is_array($options) && (($widget_mode == 'plg') or ($widget_mode == 'both')) && array_key_exists('widget_code', $options)) {
         //$widget_code = get_widget_code();
         if (is_page()) {//это страница
-            if ($options['on_page'] == 1) {
+            if ($options['on_page'] == 1 && ($options['on_main'] == 1 && is_front_page())) {
                 switch ($options['widget_position']) {
                     case 'both':
                         return get_widget_code().$content.get_widget_code();
@@ -652,6 +652,15 @@ function add_widget($content)
                     case 'bottom':
                         return $content.get_widget_code();
                 }
+            } elseif ($options['on_page'] == 1 && ($options['on_main'] != 1 && !(is_front_page()))) {
+                    switch ($options['widget_position']) {
+                        case 'both':
+                            return get_widget_code().$content.get_widget_code();
+                        case 'top':
+                            return get_widget_code().$content;
+                        case 'bottom':
+                            return $content.get_widget_code();
+                    }
             } else return $content;
         } elseif (is_archive()) {
             if ($options['on_archive'] == 1) {
@@ -665,7 +674,16 @@ function add_widget($content)
                 }
             } else return $content;
         } elseif (is_front_page()) {
-            if ($options['on_main'] == 1) {
+            if ($options['on_main'] == 1 && !(is_home())) {
+                switch ($options['widget_position']) {
+                    case 'both':
+                        return get_widget_code(get_permalink()).$content.get_widget_code(get_permalink());
+                    case 'top':
+                        return get_widget_code(get_permalink()).$content;
+                    case 'bottom':
+                        return $content.get_widget_code(get_permalink());
+                }
+            } elseif ($options['on_main'] == 1 && is_home()) {
                 switch ($options['widget_position']) {
                     case 'both':
                         return get_widget_code(get_permalink()).$content.get_widget_code(get_permalink());

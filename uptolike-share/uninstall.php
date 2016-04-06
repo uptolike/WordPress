@@ -1,6 +1,6 @@
 <?php
 
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) )
+if (!defined('WP_UNINSTALL_PLUGIN'))
     exit();
 
 function uptolike_delete_plugin() {
@@ -11,3 +11,4 @@ function uptolike_delete_plugin() {
 uptolike_delete_plugin();
 
 ?>
+

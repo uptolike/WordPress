@@ -5,7 +5,8 @@ if (!defined('WP_UNINSTALL_PLUGIN'))
 
 function uptolike_delete_plugin() {
 
-    delete_option('my_option_name');
+    delete_option('uptolike_options');
+    delete_option('widget_uptolikewidget');
 }
 
 uptolike_delete_plugin();

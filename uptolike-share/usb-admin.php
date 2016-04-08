@@ -26,7 +26,7 @@ function statIframe($projectId, $partnerId, $mail, $cryptKey) {
 }
 
 function usb_admin_page() {
-    $options = get_option('my_option_name');
+    $options = get_option('uptolike_options');
 
     if ((isset($options['uptolike_email'])) && ('' !== $options['uptolike_email'])) {
         $email = $options['uptolike_email'];
@@ -35,7 +35,7 @@ function usb_admin_page() {
     $projectId = 'cms' . preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']);
     $projectId = str_replace('.', '', $projectId);
     $projectId = str_replace('-', '', $projectId);
-    $options = get_option('my_option_name');
+    $options = get_option('uptolike_options');
     if (is_array($options) && array_key_exists('id_number', $options)) {
         $cryptKey = $options['id_number'];
     } else $cryptKey = '';

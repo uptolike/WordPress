@@ -569,16 +569,16 @@ function add_widget($content) {
                     case 'bottom':
                         return $content . get_widget_code(get_permalink());
                 }
-            } elseif (is_single() && ($post->post_parent) && $options['on_post'] == 1 && (home_url('/') != request_home_url())) {
+            } elseif (is_single() && $options['on_post'] == 1 && (home_url('/') != request_home_url())) {
                 switch ($options['widget_position']) {
                     case 'both':
                         return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
                     case 'top':
                         return get_widget_code(get_permalink()) . $content;
                     case 'bottom':
-                        return $content . get_widget_code(get_permalink()).'is_sing='.is_single().'is_page='.is_page();
+                        return $content . get_widget_code(get_permalink());
                 }
-            } elseif ($options['on_archive'] == 1 && $options['on_post'] == 1) {
+            } elseif (is_archive() && $options['on_archive'] == 1 && $options['on_post'] == 1) {
                 switch ($options['widget_position']) {
                     case 'both':
                         return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());

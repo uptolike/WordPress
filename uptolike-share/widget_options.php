@@ -682,7 +682,6 @@ function set_default_code() {
     }
     $domain = get_site_url();
     $domain = str_replace(array('http://', 'https://', '.', '-', 'www.'), '', $domain);
-    $data_url = '';
     $data_pid = 'cms' . $domain;
     $code = <<<EOD
 <script type="text/javascript">(function (w, doc) {
@@ -702,7 +701,6 @@ function set_default_code() {
 </div>
 EOD;
     $code = str_replace('data-pid', 'data-pid="' . $data_pid . '"', $code);
-    $code = str_replace('data-url', 'data-url="' . $data_url . '"', $code);
     $options['widget_code'] = $code;
     $options['on_main'] = 1;
     $options['on_page'] = 1;

@@ -249,6 +249,9 @@ class MySettingsPage {
         add_settings_field('on_page', //ID
             'На статических страницах', array($this, 'uptolike_on_page_callback'), $this->settings_page_name, 'setting_section_id');
 
+        add_settings_field('on_post', //ID
+            'На страницах записей', array($this, 'uptolike_on_post_callback'), $this->settings_page_name, 'setting_section_id');
+
         add_settings_field('on_archive', //ID
             'На страницах архивов', array($this, 'uptolike_on_archive_callback'), $this->settings_page_name, 'setting_section_id');
 
@@ -293,6 +296,10 @@ class MySettingsPage {
         if (isset($input['on_page'])) {
             $new_input['on_page'] = 1;
         } else $new_input['on_page'] = 0;
+
+        if (isset($input['on_post'])) {
+            $new_input['on_post'] = 1;
+        } else $new_input['on_post'] = 0;
 
         if (isset($input['on_special_pages'])) {
             $new_input['on_special_pages'] = 1;
@@ -355,28 +362,30 @@ class MySettingsPage {
         echo '<input type="checkbox" id="on_main" name="uptolike_options[on_main]"';
         echo($this->options['on_main'] == '1' ? 'checked="checked"' : '');
         echo '/>';
-
     }
 
     public function uptolike_on_page_callback() {
         echo '<input type="checkbox" id="on_page" name="uptolike_options[on_page]"';
         echo($this->options['on_page'] == '1' ? 'checked="checked"' : '');
         echo '/>';
+    }
 
+    public function uptolike_on_post_callback() {
+        echo '<input type="checkbox" id="on_post" name="uptolike_options[on_post]"';
+        echo($this->options['on_post'] == '1' ? 'checked="checked"' : '');
+        echo '/>';
     }
 
     public function uptolike_on_special_pages_callback() {
         echo '<input type="checkbox" id="on_special_pages" name="uptolike_options[on_special_pages]"';
         echo($this->options['on_special_pages'] == '1' ? 'checked="checked"' : '');
         echo '/>';
-
     }
 
     public function uptolike_on_archive_callback() {
         echo '<input type="checkbox" id="on_archive" name="uptolike_options[on_archive]"';
         echo($this->options['on_archive'] == '1' ? 'checked="checked"' : '');
         echo '/>';
-
     }
 
     public function uptolike_widget_mode_callback() {
@@ -550,8 +559,7 @@ function add_widget($content) {
                 } elseif ($options['on_main'] != 1 && (home_url('/') == request_home_url())) {
                     return $content;
                 }
-            }
-            if ($options['on_page'] == 1 && (($options['on_archive'] == 1) || ($options['on_archive'] != 1)) && (home_url('/') != request_home_url())) {
+            } elseif (is_page() && $options['on_page'] == 1 && !(is_single()) && (($options['on_archive'] == 1) || ($options['on_archive'] != 1)) && (home_url('/') != request_home_url())) {
                 switch ($options['widget_position']) {
                     case 'both':
                         return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
@@ -560,8 +568,16 @@ function add_widget($content) {
                     case 'bottom':
                         return $content . get_widget_code(get_permalink());
                 }
-            }
-            if ($options['on_archive'] == 1 && $options['on_page'] == 1) {
+            } elseif (is_single() && $options['on_post'] == 1 && (($options['on_archive'] == 1) || ($options['on_archive'] != 1)) && (home_url('/') != request_home_url())) {
+                switch ($options['widget_position']) {
+                    case 'both':
+                        return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
+                    case 'top':
+                        return get_widget_code(get_permalink()) . $content;
+                    case 'bottom':
+                        return $content . get_widget_code(get_permalink());
+                }
+            } elseif ($options['on_archive'] == 1 && $options['on_post'] == 1) {
                 switch ($options['widget_position']) {
                     case 'both':
                         return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
@@ -579,10 +595,17 @@ function add_widget($content) {
                 } elseif ($options['on_main'] != 1 && (home_url('/') == request_home_url())) {
                     return $content;
                 }
-            } elseif (is_page() || is_single()) {
+            } elseif (is_page()) {
                 if ($options['on_page'] == 1 && (($options['on_archive'] == 1) || ($options['on_archive'] != 1)) && (home_url('/') != request_home_url())) {
                     return $content . get_widget_code();
                 } elseif ($options['on_page'] != 1) {
+                    return $content;
+                }
+
+            } elseif (is_single()) {
+                if ($options['on_post'] == 1 && (($options['on_archive'] == 1) || ($options['on_archive'] != 1)) && (home_url('/') != request_home_url())) {
+                    return $content . get_widget_code();
+                } elseif ($options['on_post'] != 1) {
                     return $content;
                 }
             } elseif (is_archive()) {
@@ -683,6 +706,7 @@ EOD;
     $options['widget_code'] = $code;
     $options['on_main'] = 1;
     $options['on_page'] = 1;
+    $options['on_post'] = 1;
     $options['on_special_pages'] = 1;
     $options['on_archive'] = 1;
     $options['widget_position'] = 'bottom';
@@ -713,7 +737,7 @@ function my_custom_menu_page() {
     include_once('usb-admin.php');
 }
 
-function request_home_url($url='') {
+function request_home_url($url = '') {
     $result = '';
     $default_port = 80;
     if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) {
@@ -727,8 +751,8 @@ function request_home_url($url='') {
         $result .= ':' . $_SERVER['SERVER_PORT'];
     }
     $result .= $_SERVER['REQUEST_URI'];
-    if($url) {
-        return $result .= $url;
+    if ($url) {
+        $result .= $url;
     }
     return $result;
 }

@@ -542,10 +542,11 @@ function get_widget_code($url = '') {
 }
 
 function add_widget($content) {
+    global $post;
     $options = get_option('uptolike_options');
     $widget_mode = $options['widget_mode'];
     if (is_array($options) && (($widget_mode == 'plg') or ($widget_mode == 'both')) && array_key_exists('widget_code', $options)) {
-        if (!empty(json_decode($options['uptolike_json'])->orientation) && json_decode($options['uptolike_json'])->orientation < 2) {
+        if ((!empty(json_decode($options['uptolike_json'])->orientation) && json_decode($options['uptolike_json'])->orientation < 2) || !(isset(json_decode($options['uptolike_json'])->orientation))) {
             if (is_front_page() || is_home()) {
                 if ($options['on_main'] == 1 && (home_url('/') == request_home_url())) {
                     switch ($options['widget_position']) {
@@ -559,7 +560,7 @@ function add_widget($content) {
                 } elseif ($options['on_main'] != 1 && (home_url('/') == request_home_url())) {
                     return $content;
                 }
-            } elseif (is_page() && $options['on_page'] == 1 && !(is_single()) && (($options['on_archive'] == 1) || ($options['on_archive'] != 1)) && (home_url('/') != request_home_url())) {
+            } elseif (is_page() && $options['on_page'] == 1 && (home_url('/') != request_home_url())) {
                 switch ($options['widget_position']) {
                     case 'both':
                         return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
@@ -568,14 +569,14 @@ function add_widget($content) {
                     case 'bottom':
                         return $content . get_widget_code(get_permalink());
                 }
-            } elseif (is_single() && $options['on_post'] == 1 && (($options['on_archive'] == 1) || ($options['on_archive'] != 1)) && (home_url('/') != request_home_url())) {
+            } elseif (is_single() && ($post->post_parent) && $options['on_post'] == 1 && (home_url('/') != request_home_url())) {
                 switch ($options['widget_position']) {
                     case 'both':
                         return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
                     case 'top':
                         return get_widget_code(get_permalink()) . $content;
                     case 'bottom':
-                        return $content . get_widget_code(get_permalink());
+                        return $content . get_widget_code(get_permalink()).'is_sing='.is_single().'is_page='.is_page();
                 }
             } elseif ($options['on_archive'] == 1 && $options['on_post'] == 1) {
                 switch ($options['widget_position']) {
@@ -596,20 +597,19 @@ function add_widget($content) {
                     return $content;
                 }
             } elseif (is_page()) {
-                if ($options['on_page'] == 1 && (($options['on_archive'] == 1) || ($options['on_archive'] != 1)) && (home_url('/') != request_home_url())) {
+                if ($options['on_page'] == 1 && (home_url('/') != request_home_url())) {
                     return $content . get_widget_code();
                 } elseif ($options['on_page'] != 1) {
                     return $content;
                 }
-
             } elseif (is_single()) {
-                if ($options['on_post'] == 1 && (($options['on_archive'] == 1) || ($options['on_archive'] != 1)) && (home_url('/') != request_home_url())) {
+                if ($options['on_post'] == 1 && (home_url('/') != request_home_url())) {
                     return $content . get_widget_code();
                 } elseif ($options['on_post'] != 1) {
                     return $content;
                 }
             } elseif (is_archive()) {
-                if ($options['on_archive'] == 1 && (home_url('/') != request_home_url())) {
+                if ($options['on_archive'] == 1 && $options['on_post'] == 1 && (home_url('/') != request_home_url())) {
                     return $content . get_widget_code();
                 } elseif ($options['on_archive'] != 1) {
                     return $content;

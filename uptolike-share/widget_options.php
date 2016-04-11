@@ -214,7 +214,7 @@ class MySettingsPage {
                                     </div>
                                 </div>
                                 <div class="utl_innertext"><a
-                                        href="http://uptolike.ru">Uptolike.ru</a> - конструктор
+                                        href="http://uptolike.ru">Uptolike.ru</a> &mdash; конструктор
                                     социальных кнопок для вашего сайта с расширенным
                                     функционалом.<br>
                                     Служба поддержки: <a

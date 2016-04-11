@@ -250,7 +250,7 @@ class MySettingsPage {
             'На статических страницах', array($this, 'uptolike_on_page_callback'), $this->settings_page_name, 'setting_section_id');
 
         add_settings_field('on_archive', //ID
-            'В архивах', array($this, 'uptolike_on_archive_callback'), $this->settings_page_name, 'setting_section_id');
+            'На страницах архивов', array($this, 'uptolike_on_archive_callback'), $this->settings_page_name, 'setting_section_id');
 
         add_settings_field('on_special_pages', //ID
             'На спец. страницах <p class="utl_quest"><img class="utl_quest" src="/wp-content/plugins/uptolike-share/images/quest.png"><span class="utl_quest">Отображение блока кнопок на страницах, созданных плагинами (WooCommerce, WP-Shop и т.д.)</span></p>', array($this, 'uptolike_on_special_pages_callback'), $this->settings_page_name, 'setting_section_id');
@@ -507,9 +507,12 @@ function get_widget_code($url = '') {
     $widget_code = $options['widget_code'];
     $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0, strpos($_SERVER["SERVER_PROTOCOL"], '/'))) . '://';
     if ($url == '') {
-        if (is_single()) {
+        if (is_single() || is_page()) {
             $url = get_permalink();
         } else $url = $protocol . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+    }
+    if ($_SERVER["REQUEST_URI"] == '/' && !(json_decode($options['uptolike_json'])->orientation < 2) && !empty(json_decode($options['uptolike_json'])->orientation)) {
+        $url = home_url('/');
     }
 
     $domain = preg_replace('/^www\./', '', get_site_url());
@@ -517,12 +520,13 @@ function get_widget_code($url = '') {
 
     $widget_code = str_replace('data-pid="-1"', 'data-pid="' . $data_pid . '"', $widget_code);
     $widget_code = str_replace('data-pid=""', 'data-pid="' . $data_pid . '"', $widget_code);
-    $widget_code = str_replace('div data', 'div data-url="' . $url . '"data-del', $widget_code); //gambit дублирование дата урл
-    $widget_code = preg_replace('!data-del-url="(.*?)"!si', '', $widget_code);
+    $widget_code = str_replace('div data', 'div data-url="' . $url . '" del', $widget_code);//data-url duplicate
+    $widget_code = preg_replace('!del-url="(.*?)"!si', '', $widget_code);
+    $widget_code = str_replace('del-', '', $widget_code);
     $align = $options['widget_align'];
 
     $align_style = 'style="text-align: ' . $align . ';"';
-    $widget_code = str_replace('div data-', 'div data-lang="' . $options['utl_language'] . '" data-', $widget_code);
+    $widget_code = str_replace('div data', 'div data-lang="' . $options['utl_language'] . '" data', $widget_code);
     $widget_code = str_replace('<div ', '<div ' . $align_style . ' ', $widget_code);
 
     return $widget_code;
@@ -532,44 +536,67 @@ function add_widget($content) {
     $options = get_option('uptolike_options');
     $widget_mode = $options['widget_mode'];
     if (is_array($options) && (($widget_mode == 'plg') or ($widget_mode == 'both')) && array_key_exists('widget_code', $options)) {
-        if ($options['on_main'] == 1 && (home_url('/') == request_home_url())) {
-            switch ($options['widget_position']) {
-                case 'both':
-                    return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
-                case 'top':
-                    return get_widget_code(get_permalink()) . $content;
-                case 'bottom':
-                    return $content . get_widget_code(get_permalink());
+        if (!empty(json_decode($options['uptolike_json'])->orientation) && json_decode($options['uptolike_json'])->orientation < 2) {
+            if (is_front_page() || is_home()) {
+                if ($options['on_main'] == 1 && (home_url('/') == request_home_url())) {
+                    switch ($options['widget_position']) {
+                        case 'both':
+                            return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
+                        case 'top':
+                            return get_widget_code(get_permalink()) . $content;
+                        case 'bottom':
+                            return $content . get_widget_code(get_permalink());
+                    }
+                } elseif ($options['on_main'] != 1 && (home_url('/') == request_home_url())) {
+                    return $content;
+                }
             }
-        } elseif ($options['on_main'] != 1 && (home_url('/') == request_home_url())) {
+            if ($options['on_page'] == 1 && (($options['on_archive'] == 1) || ($options['on_archive'] != 1)) && (home_url('/') != request_home_url())) {
+                switch ($options['widget_position']) {
+                    case 'both':
+                        return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
+                    case 'top':
+                        return get_widget_code(get_permalink()) . $content;
+                    case 'bottom':
+                        return $content . get_widget_code(get_permalink());
+                }
+            }
+            if ($options['on_archive'] == 1 && $options['on_page'] == 1) {
+                switch ($options['widget_position']) {
+                    case 'both':
+                        return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
+                    case 'top':
+                        return get_widget_code(get_permalink()) . $content;
+                    case 'bottom':
+                        return $content . get_widget_code(get_permalink());
+                }
+            }
             return $content;
-        }
-
-        if ($options['on_page'] == 1 && (($options['on_archive'] == 1) || ($options['on_archive'] != 1)) && (home_url('/') != request_home_url())) {
-            switch ($options['widget_position']) {
-                case 'both':
-                    return get_widget_code() . $content . get_widget_code();
-                case 'top':
-                    return get_widget_code() . $content;
-                case 'bottom':
+        } else { //if vertical panel
+            if (is_front_page() || is_home()) {
+                if ($options['on_main'] == 1 && (home_url('/') == request_home_url())) {
                     return $content . get_widget_code();
+                } elseif ($options['on_main'] != 1 && (home_url('/') == request_home_url())) {
+                    return $content;
+                }
+            } elseif (is_page() || is_single()) {
+                if ($options['on_page'] == 1 && (($options['on_archive'] == 1) || ($options['on_archive'] != 1)) && (home_url('/') != request_home_url())) {
+                    return $content . get_widget_code();
+                } elseif ($options['on_page'] != 1) {
+                    return $content;
+                }
+            } elseif (is_archive()) {
+                if ($options['on_archive'] == 1 && (home_url('/') != request_home_url())) {
+                    return $content . get_widget_code();
+                } elseif ($options['on_archive'] != 1) {
+                    return $content;
+                }
+            } else { //if other page
+                return $content . get_widget_code();
             }
         }
-
-        if ($options['on_archive'] == 1 && $options['on_page'] == 1) {
-            switch ($options['widget_position']) {
-                case 'both':
-                    return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
-                case 'top':
-                    return get_widget_code(get_permalink()) . $content;
-                case 'bottom':
-                    return $content . get_widget_code(get_permalink());
-            }
-        }
-
         return $content;
     }
-    return $content;
 }
 
 add_filter('the_content', 'add_widget', 100);
@@ -632,7 +659,7 @@ function set_default_code() {
     }
     $domain = get_site_url();
     $domain = str_replace(array('http://', 'https://', '.', '-', 'www.'), '', $domain);
-    $data_url = 'cms' . $_SERVER['HTTP_HOST'];
+    $data_url = '';
     $data_pid = 'cms' . $domain;
     $code = <<<EOD
 <script type="text/javascript">(function (w, doc) {
@@ -661,6 +688,7 @@ EOD;
     $options['widget_position'] = 'bottom';
     $options['widget_mode'] = 'plg';
     $options['widget_align'] = 'left';
+    $options['utl_language'] = 'ru';
     update_option('uptolike_options', $options);
 }
 
@@ -685,7 +713,7 @@ function my_custom_menu_page() {
     include_once('usb-admin.php');
 }
 
-function request_home_url() {
+function request_home_url($url='') {
     $result = '';
     $default_port = 80;
     if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) {
@@ -699,6 +727,9 @@ function request_home_url() {
         $result .= ':' . $_SERVER['SERVER_PORT'];
     }
     $result .= $_SERVER['REQUEST_URI'];
+    if($url) {
+        return $result .= $url;
+    }
     return $result;
 }
 

@@ -122,6 +122,7 @@ Answers to Frequently Asked Questions you can find at http://uptolike.ru/faq
 * Исправлен баг с ориентацией панели
 * Исправлен баг с дублированием параметра data-url
 * Исправлен баг с параметрами плагина по умолчанию
+* Рефакторинг кода
 * Реструктуризация плагина
 
 == Changelog ==

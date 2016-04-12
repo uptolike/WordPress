@@ -117,6 +117,11 @@ Answers to Frequently Asked Questions you can find at http://uptolike.ru/faq
 3. Traffic and sharing statistics
 
 == Changelog ==
+= 1.4.8 =
+* HOTFIX
+* Исправлен баг с [шорткодом]
+* Исправлен баг с настройками
+
 = 1.4.7 =
 * Исправлена логика вывода виджета на всех страницах
 * Исправлен баг с ориентацией панели

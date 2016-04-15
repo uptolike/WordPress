@@ -102,7 +102,6 @@ class MySettingsPage {
             <div id="wrapper">
                 <form id="settings_form" method="post" action="options.php">
                     <h1> UpToLike виджет</h1>
-
                     <h2 class="nav-tab-wrapper">
                         <a class="nav-tab nav-tab-active" href="#" id="construct">
                             Конструктор
@@ -240,37 +239,37 @@ class MySettingsPage {
 
         add_settings_field('data_pid', 'Ключ(CryptKey)', array($this, 'id_number_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('email', //ID
+        add_settings_field('email',
             'email для регистрации', array($this, 'uptolike_email_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('on_main', //ID
+        add_settings_field('on_main',
             'На главной странице ', array($this, 'uptolike_on_main_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('on_page', //ID
+        add_settings_field('on_page',
             'На статических страницах', array($this, 'uptolike_on_page_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('on_post', //ID
+        add_settings_field('on_post',
             'На страницах записей', array($this, 'uptolike_on_post_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('on_archive', //ID
+        add_settings_field('on_archive',
             'На страницах архивов', array($this, 'uptolike_on_archive_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('on_special_pages', //ID
-            'На спец. страницах <p class="utl_quest"><img class="utl_quest" src="/wp-content/plugins/uptolike-share/images/quest.png"><span class="utl_quest">Отображение блока кнопок на страницах, созданных плагинами (WooCommerce, WP-Shop и т.д.)</span></p>', array($this, 'uptolike_on_special_pages_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('on_special_pages',
+            'На спец. страницах <p class="utl_quest"><img class="utl_quest" src="/wp-content/plugins/uptolike-share/images/quest.png"><span class="utl_quest">Отображается только боковая панель на страницах, созданных плагинами (WooCommerce, WP-Shop и т.д.)</span></p>', array($this, 'uptolike_on_special_pages_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('widget_position', //ID
+        add_settings_field('widget_position',
             'Расположение блока', array($this, 'uptolike_widget_position_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('widget_align', //ID
+        add_settings_field('widget_align',
             'Выравнивание блока', array($this, 'uptolike_widget_align_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('widget_mode', //ID
+        add_settings_field('widget_mode',
             'Режим работы', array($this, 'uptolike_widget_mode_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('utl_language', //ID
+        add_settings_field('utl_language',
             'Язык', array($this, 'uptolike_utl_language_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('uptolike_json', //ID
+        add_settings_field('uptolike_json',
             'настройки конструктора', array($this, 'uptolike_json_callback'), $this->settings_page_name, 'setting_section_id');
     }
 
@@ -615,8 +614,6 @@ function add_widget($content) {
                 } elseif ($options['on_archive'] != 1) {
                     return $content;
                 }
-            } else { //if other page
-                return $content . get_widget_code();
             }
         }
         return $content;
@@ -662,7 +659,7 @@ function try_reg() {
             $my_options['choice'] = 'reg';
             update_option('my_option_name', $my_options);
         };
-        update_option('reg_try', true);
+        update_option('regme', true);
     }
 }
 
@@ -757,6 +754,26 @@ function request_home_url($url = '') {
     return $result;
 }
 
+function headeruptolike() {
+    $options = get_option('my_option_name');
+    if ((home_url('/') == request_home_url()) && $options['on_main'] == 1) {
+        $in_content = array(0, 1);
+        $in_fixed_block = array(2, 3, 4, 5);
+        $curr_value = json_decode($options['uptolike_json'])->orientation;
+        if (in_array($curr_value, $in_content)) {
+        } elseif (in_array($curr_value, $in_fixed_block)) {
+            echo get_widget_code();
+        }
+    } elseif ((home_url('/') != request_home_url()) && $options['on_special_pages'] == 1 && $options['on_pages'] == 1) {
+        $in_content = array(0, 1);
+        $in_fixed_block = array(2, 3, 4, 5);
+        $curr_value = json_decode($options['uptolike_json'])->orientation;
+        if (in_array($curr_value, $in_content)) {
+        } elseif (in_array($curr_value, $in_fixed_block)) {
+            echo get_widget_code();
+        }
+    }
+}
 
 class UptolikeWidget extends WP_Widget {
 
@@ -781,6 +798,7 @@ function uptolike_register_widgets() {
 register_activation_hook(__FILE__, 'usb_admin_actions');
 
 add_action('widgets_init', 'uptolike_register_widgets');
+add_action('wp_footer', 'headeruptolike', 1);
 add_action('admin_notices', 'my_choice_notice');
 add_action('admin_notices', 'my_widgetcode_notice');
 add_action('admin_menu', 'usb_admin_actions');

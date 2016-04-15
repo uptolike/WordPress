@@ -117,6 +117,11 @@ Answers to Frequently Asked Questions you can find at http://uptolike.ru/faq
 3. Traffic and sharing statistics
 
 == Changelog ==
+= 1.4.9 =
+* HOTFIX
+* Исправлен баг отображением плагина на специальных страницах
+* Добавлена настройка вывода плагина на отдельных записях(товаров)
+
 = 1.4.8 =
 * HOTFIX
 * Исправлен баг с [шорткодом]

@@ -126,11 +126,11 @@ span.utl_quest {
     color: #717171;
     font-size: 13px;
     height: 63px;
-    width: 237px;
+    width: 260px;
     position: absolute;
     text-align: center;
-    top: 389px;
-    left: 32px;
+    top: 420px;
+    left: 40px;
     display: none;
     z-index: 100;
 }

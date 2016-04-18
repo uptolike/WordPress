@@ -6,7 +6,7 @@
  * Version: 1.4.9
  * Requires at least: 4.1
  * Tested up to: 4.5
- * Author: UptolikeTeam
+ * Author: Uptolike Team
  * Author URI: https://uptolike.com/
  *
  * @package UpToLike

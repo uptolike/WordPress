@@ -2,7 +2,7 @@
 Contributors: Uptolike Team
 Tags: +1, UpToLike, AddThis, social buttons, bookmark, bookmarking, like, share, share button, sharing, social bookmarking, social bookmarks, social buttons, кнопки соцсетей, социальные кнопки
 Requires at least: 3.0.1
-Tested up to: 4.5
+Tested up to: 4.5.2
 Stable tag: 1.4.9
 
 Uptolike Social Share Buttons - social bookmarking widget with sharing statistics.
@@ -44,8 +44,6 @@ UpToLike is compatible with 25 popular social networking sites. It supports the 
 
 * Number of Likes and Shares on site during the selected period
 * Number of users attracted because of Likes and Shares
-* Separation of traffic on social networks
-* Per-page site activity: how many Likes and Shares for each individual page, and how many new visitors came to each page
 * Social buttons adapted to mobile devices
 
 **Uptolike Social Share Buttons - бесплатный русскоязычный плагин социальных кнопок**
@@ -85,8 +83,6 @@ Uptolike поддерживает 25 популярных социальных �
 
 * Количество лайков и шаров на сайте за выбранный период
 * Количество привлеченных пользователей, благодаря лайкам и шарам
-* Разделение трафика по социальным сетям
-* Постраничная статистика по сайту: сколько лайков и шаров получила каждая отдельная. страница сайта, и сколько новых посетителей пришли именно на эту страницу
 
 == Installation ==
 1. Go to Plugins -> Add New

@@ -39,12 +39,12 @@ UpToLike is compatible with 25 popular social networking sites. It supports the 
 * Social Media Following
 * Automatic text selection: the system gives you the option to share a highlighted piece of text on a social network
 * Gathering unique statistics of social media activity
+* Social buttons adapted to mobile devices
 
 **What statistics does UpToLike collect?**
 
 * Number of Likes and Shares on site during the selected period
 * Number of users attracted because of Likes and Shares
-* Social buttons adapted to mobile devices
 
 **Uptolike Social Share Buttons - бесплатный русскоязычный плагин социальных кнопок**
 

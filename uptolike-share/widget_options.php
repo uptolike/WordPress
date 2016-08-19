@@ -528,10 +528,11 @@ function get_widget_code($url = '') {
 
     $widget_code = str_replace('data-pid="-1"', 'data-pid="' . $data_pid . '"', $widget_code);
     $widget_code = str_replace('data-pid=""', 'data-pid="' . $data_pid . '"', $widget_code);
-    $widget_code = str_replace('div data', 'div data-url="' . $url . '" del', $widget_code);//data-url duplicate
+    $widget_code = str_replace('div data', 'div data-url="' . $url . '" data', $widget_code);//data-url duplicate
     $widget_code = preg_replace('!del-url="(.*?)"!si', '', $widget_code);
     $widget_code = str_replace('del-url', '', $widget_code);
     $widget_code = str_replace('del-', '', $widget_code);
+    $widget_code = str_replace('data--', 'data-', $widget_code);
     $align = $options['widget_align'];
 
     $align_style = 'style="text-align: ' . $align . ';"';

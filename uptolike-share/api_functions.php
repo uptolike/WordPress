@@ -1,5 +1,4 @@
 <?php
-//1.4.8 12/04/16
 
 const HOST = 'https://uptolike.com/';
 

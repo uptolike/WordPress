@@ -3,7 +3,7 @@
  * Plugin Name: UpToLike Social Share Buttons
  * Plugin URI: https://uptolike.com/
  * Description: Uptolike Social Share Buttons - social bookmarking widget with sharing statistics.
- * Version: 1.4.9
+ * Version: 1.5.0
  * Requires at least: 4.1
  * Tested up to: 4.5
  * Author: Uptolike Team

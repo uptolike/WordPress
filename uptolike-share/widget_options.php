@@ -533,6 +533,7 @@ function get_widget_code($url = '') {
     $widget_code = str_replace('del-url', '', $widget_code);
     $widget_code = str_replace('del-', '', $widget_code);
     $widget_code = str_replace('data--', 'data-', $widget_code);
+    $widget_code = str_replace(' data-url ', ' ', $widget_code);
     $align = $options['widget_align'];
 
     $align_style = 'style="text-align: ' . $align . ';"';

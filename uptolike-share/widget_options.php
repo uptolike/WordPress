@@ -516,9 +516,10 @@ function get_widget_code($url = '') {
     $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0, strpos($_SERVER["SERVER_PROTOCOL"], '/'))) . '://';
     if ($url == '') {
         if (is_single() || is_page()) {
-            $url = get_permalink();
+            $url = the_permalink();
         } else $url = $protocol . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
     }
+
     if ($_SERVER["REQUEST_URI"] == '/' && !(json_decode($options['uptolike_json'])->orientation < 2) && !empty(json_decode($options['uptolike_json'])->orientation)) {
         $url = home_url('/');
     }
@@ -528,23 +529,16 @@ function get_widget_code($url = '') {
 
     $widget_code = str_replace('data-pid="-1"', 'data-pid="' . $data_pid . '"', $widget_code);
     $widget_code = str_replace('data-pid=""', 'data-pid="' . $data_pid . '"', $widget_code);
-    $widget_code = str_replace('div data', 'div data-url="' . $url . '" data', $widget_code);//data-url duplicate
-    $widget_code = preg_replace('!del-url="(.*?)"!si', '', $widget_code);
-    $widget_code = str_replace('del-url', '', $widget_code);
-    $widget_code = str_replace('del-', '', $widget_code);
-    $widget_code = str_replace('data--', 'data-', $widget_code);
-    $widget_code = str_replace(' data-url ', ' ', $widget_code);
+    $widget_code = str_replace('div data', 'div data-url="' . $url . '" data', $widget_code);
     $align = $options['widget_align'];
-
-    $align_style = 'style="text-align: ' . $align . ';"';
+    $align_style = 'style="text-align:' . $align . ';"';
     $widget_code = str_replace('div data', 'div data-lang="' . $options['utl_language'] . '" data', $widget_code);
-    $widget_code = str_replace('<div ', '<div ' . $align_style . ' ', $widget_code);
+    $widget_code = str_replace('<div data', '<div ' . $align_style . ' data', $widget_code);
 
     return $widget_code;
 }
 
 function add_widget($content) {
-    global $post;
     $options = get_option('my_option_name');
     $widget_mode = $options['widget_mode'];
     if (is_array($options) && (($widget_mode == 'plg') or ($widget_mode == 'both')) && array_key_exists('widget_code', $options)) {
@@ -590,42 +584,32 @@ function add_widget($content) {
                         return $content . get_widget_code(get_permalink());
                 }
             }
-            return $content;
         } else { //if vertical panel
             if (is_front_page() || is_home()) {
                 if ($options['on_main'] == 1 && (home_url('/') == request_home_url())) {
-                    return $content . get_widget_code();
-                } elseif ($options['on_main'] != 1 && (home_url('/') == request_home_url())) {
-                    return $content;
+                    add_action('wp_footer', 'headeruptolike');
                 }
             } elseif (is_page()) {
                 if ($options['on_page'] == 1 && (home_url('/') != request_home_url())) {
-                    return $content . get_widget_code();
-                } elseif ($options['on_page'] != 1) {
-                    return $content;
+                    add_action('wp_footer', 'headeruptolike');
                 }
             } elseif (is_single()) {
                 if ($options['on_post'] == 1 && (home_url('/') != request_home_url())) {
-                    return $content . get_widget_code();
-                } elseif ($options['on_post'] != 1) {
-                    return $content;
+                    add_action('wp_footer', 'headeruptolike');
                 }
             } elseif (is_archive()) {
                 if ($options['on_archive'] == 1 && $options['on_post'] == 1 && (home_url('/') != request_home_url())) {
-                    return $content . get_widget_code();
-                } elseif ($options['on_archive'] != 1) {
-                    return $content;
+                    add_action('wp_footer', 'headeruptolike');
                 }
             }
         }
-        return $content;
     }
     return $content;
 }
 
 add_filter('the_content', 'add_widget', 100);
 
-function uptolike_shortcode($atts) {
+function uptolike_shortcode() {
     $options = get_option('my_option_name');
     $widget_mode = $options['widget_mode'];
     if (($widget_mode == 'code') or ($widget_mode == 'both')) {
@@ -800,7 +784,6 @@ function uptolike_register_widgets() {
 register_activation_hook(__FILE__, 'usb_admin_actions');
 
 add_action('widgets_init', 'uptolike_register_widgets');
-add_action('wp_footer', 'headeruptolike', 1);
 add_action('admin_notices', 'my_choice_notice');
 add_action('admin_notices', 'my_widgetcode_notice');
 add_action('admin_menu', 'usb_admin_actions');

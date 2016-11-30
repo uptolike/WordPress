@@ -516,7 +516,15 @@ function get_widget_code($url = '') {
     $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0, strpos($_SERVER["SERVER_PROTOCOL"], '/'))) . '://';
     if ($url == '') {
         if (is_single() || is_page()) {
-            $url = the_permalink();
+            if(json_decode($options['uptolike_json'])->orientation != 2) {
+                $url = get_permalink();
+            } else {
+                if ($options['widget_mode'] == 'plg') {
+                    $url = the_permalink();
+                } else {
+                    $url = get_permalink();
+                }
+            }
         } else $url = $protocol . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
     }
 
@@ -614,8 +622,8 @@ function uptolike_shortcode() {
     $widget_mode = $options['widget_mode'];
     if (($widget_mode == 'code') or ($widget_mode == 'both')) {
         return get_widget_code();
-    };
-    return true;
+    }
+    return;
 }
 
 add_shortcode('uptolike', 'uptolike_shortcode');

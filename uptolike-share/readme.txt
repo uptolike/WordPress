@@ -44,7 +44,7 @@ Uptolike поддерживает 25 популярных социальных �
 
 ***
 
-**Uptolike Social Share Buttons - social bookmarking widget with sharing statistics.
+**Uptolike Social Share Buttons - social bookmarking widget with sharing statistics**
 
 **What Can You Do With UpToLike Social Share Buttons?**
 

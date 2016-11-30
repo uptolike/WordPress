@@ -5,9 +5,11 @@ Requires at least: 3.0.1
 Tested up to: 4.6.1
 Stable tag: 1.5.4
 
-Uptolike Social Share Buttons - бесплатный русскоязычный плагин социальных кнопок**
+Uptolike Social Share Buttons - social bookmarking widget with sharing statistics.
 
 == Description ==
+
+**Uptolike Social Share Buttons - бесплатный русскоязычный плагин социальных кнопок**
 
 **Какие задачи выполняет плагин Uptolike?**
 
@@ -46,6 +48,8 @@ Uptolike поддерживает 25 популярных социальных �
 * Количество привлеченных пользователей, благодаря лайкам и шарам
 * Разделение трафика по социальным сетям
 * Постраничная статистика по сайту: сколько лайков и шаров получила каждая отдельная. страница сайта, и сколько новых посетителей пришли именно на эту страницу
+
+***
 
 **Uptolike Social Share Buttons - social bookmarking widget with sharing statistics.
 
@@ -89,7 +93,6 @@ UpToLike is compatible with 25 popular social networking sites. It supports the 
 * Social buttons adapted to mobile devices
 
 == Installation ==
-
 1. Выберите Плагины -> Добавить новый
 2. В строке поиска введите Uptolike
 3. Установите плагин *Uptolike Social Share Buttons* и активируйте
@@ -107,7 +110,6 @@ UpToLike is compatible with 25 popular social networking sites. It supports the 
 6. Enjoy!
 
 == Frequently Asked Questions ==
-
 Ответы на часто задаваемые вопросы вы можете найти на http://uptolike.ru/faq
 
 ***

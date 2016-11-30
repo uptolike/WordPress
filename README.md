@@ -26,7 +26,8 @@ Uptolike поддерживает 25 популярных социальных �
 
 **Уникальные фишки Uptolike**
 
-- Полная кастомизация социальных кнопок:  
+- Полная кастомизация социальных кнопок:
+
 1. 3 формы
 2. 3 размера
 3. эффект при наведении (увеличение, поворот по часовой стрелке)
@@ -60,7 +61,8 @@ UpToLike is compatible with 25 popular social networking sites. It supports the 
 
 **Unique Functions of UpToLike Social Share Buttons**
 
-- Customization of social buttons:  
+- Customization of social buttons:
+
 1. 3 different shapes
 2. 3 sizes
 3. Hover effect (increase, clockwise rotation)

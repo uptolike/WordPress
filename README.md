@@ -41,14 +41,7 @@ Uptolike поддерживает 25 популярных социальных �
 - Уникальная статистика социальной активности на сайте
 - Кнопки социальных сетей, адаптированные под мобильные устройства
 
-**Статистика, которую собирает Uptolike**
-
-* Количество лайков и шаров на сайте за выбранный период
-* Количество привлеченных пользователей, благодаря лайкам и шарам
-* Разделение трафика по социальным сетям
-* Постраничная статистика по сайту: сколько лайков и шаров получила каждая отдельная. страница сайта, и сколько новых посетителей пришли именно на эту страницу
-
-**Uptolike Social Share Buttons - social bookmarking widget with sharing statistics.
+Uptolike Social Share Buttons - social bookmarking widget with sharing statistics.
 
 **What Can You Do With UpToLike Social Share Buttons?**
 
@@ -80,14 +73,6 @@ UpToLike is compatible with 25 popular social networking sites. It supports the 
 * Social Media Following
 * Automatic text selection: the system gives you the option to share a highlighted piece of text on a social network
 * Gathering unique statistics of social media activity
-
-**What statistics does UpToLike collect?**
-
-* Number of Likes and Shares on site during the selected period
-* Number of users attracted because of Likes and Shares
-* Separation of traffic on social networks
-* Per-page site activity: how many Likes and Shares for each individual page, and how many new visitors came to each page
-* Social buttons adapted to mobile devices
 
 ##Installation
 

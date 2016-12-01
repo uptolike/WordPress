@@ -107,6 +107,9 @@ Answers to Frequently Asked Questions you can find at http://uptolike.ru/faq
 3. Traffic and sharing statistics
 
 == Changelog ==
+= 1.5.5 =
+* Исправлен некорректный вывод боковой панели для страниц записей
+
 = 1.5.4 =
 * Исправлен некорректный вывод шорткода
 

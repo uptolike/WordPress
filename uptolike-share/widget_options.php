@@ -5,14 +5,14 @@ class MySettingsPage {
     public $settings_page_name = 'uptolike_settings';
 
     public function __construct() {
-        add_action('admin_menu', array($this, 'add_plugin_page'));
-        add_action('admin_init', array($this, 'page_init'));
+        add_action('admin_menu', array($this, 'uptolike_add_plugin_page'));
+        add_action('admin_init', array($this, 'uptolike_page_init'));
         $this->options = get_option('my_option_name');
     }
 
-    public function add_plugin_page() {
+    public function uptolike_add_plugin_page() {
         add_options_page('Settings Admin', 'UpToLike', 'manage_options', $this->settings_page_name, //'my-setting-admin',
-            array($this, 'create_admin_page'));
+            array($this, 'uptolike_create_admin_page'));
     }
 
     /** creates url of iframe with statistics page from given params
@@ -22,9 +22,9 @@ class MySettingsPage {
      * @param $mail
      * @param $cryptKey
      *
-     * @return stringшfr
+     * @return string
      */
-    public function statIframe($projectId, $partnerId, $mail, $cryptKey) {
+    public function uptolike_statIframe($projectId, $partnerId, $mail, $cryptKey) {
         $params = array('mail' => $mail, 'partner' => $partnerId, 'projectId' => $projectId,
 
         );
@@ -45,7 +45,7 @@ class MySettingsPage {
      *
      * @return string
      */
-    public function constructorIframe($projectId, $partnerId, $mail, $cryptKey) {
+    public function uptolike_constructorIframe($projectId, $partnerId, $mail, $cryptKey) {
         $params = array('mail' => $mail, 'partner' => $partnerId, 'projectId' => $projectId);
 
         $paramsStr = 'mail=' . $mail . '&partner=' . $partnerId . '&projectId=' . $projectId . $cryptKey;
@@ -61,7 +61,7 @@ class MySettingsPage {
      *
      * @param string $current
      */
-    public function ilc_admin_tabs($current = 'construct') {
+    public function uptolike_admin_tabs($current = 'construct') {
         $tabs = array('construct' => 'Конструктор', 'stat' => 'Статистика', 'settings' => 'Настройки');
 
         echo '<div id="icon-themes" class="icon32"><br></div>';
@@ -75,7 +75,7 @@ class MySettingsPage {
 
     /** render html page with code configuration settings
      */
-    public function create_admin_page() {
+    public function uptolike_create_admin_page() {
         $this->options = get_option('my_option_name');
         if ((isset($this->options['uptolike_email'])) && ('' !== $this->options['uptolike_email'])) {
             $email = $this->options['uptolike_email'];
@@ -116,7 +116,7 @@ class MySettingsPage {
 
                     <div class="wrapper-tab active" id="con_construct">
                         <iframe id='cons_iframe' style='height: 445px;width: 100%;'
-                                data-src="<?php echo $this->constructorIframe($projectId, $partnerId, $email, $cryptKey); ?>"></iframe>
+                                data-src="<?php echo $this->uptolike_constructorIframe($projectId, $partnerId, $email, $cryptKey); ?>"></iframe>
                         <br>
                         <a onclick="getCode();" href="#">
                             <button type="reset">Сохранить изменения</button>
@@ -124,7 +124,7 @@ class MySettingsPage {
                     </div>
                     <div class="wrapper-tab" id="con_stat">
                         <iframe style="width: 100%;height: 380px;" id="stats_iframe"
-                                data-src="<?php echo $this->statIframe($projectId, $partnerId, $email, $cryptKey); ?>">
+                                data-src="<?php echo $this->uptolike_statIframe($projectId, $partnerId, $email, $cryptKey); ?>">
                         </iframe>
                         <div id="before_key_req">Введите ваш адрес электронной почты для получения
                             ключа.
@@ -229,48 +229,37 @@ class MySettingsPage {
         <?php
     }
 
-    public function page_init() {
-        register_setting('my_option_group', 'my_option_name', array($this, 'sanitize'));
+    public function uptolike_page_init() {
+        register_setting('my_option_group', 'my_option_name', array($this, 'uptolike_sanitize'));
 
-        add_settings_section('setting_section_id', 'Настройки отображения блока Uptolike', array($this, 'print_section_info'), $this->settings_page_name);
+        add_settings_section('setting_section_id', 'Настройки отображения блока Uptolike', array($this, 'uptolike_print_section_info'), $this->settings_page_name);
 
         add_settings_field('widget_code', 'код виджета', // Title
-            array($this, 'widget_code_callback'), $this->settings_page_name, 'setting_section_id');
+            array($this, 'uptolike_widget_code_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('data_pid', 'Ключ(CryptKey)', array($this, 'id_number_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('data_pid', 'Ключ(CryptKey)', array($this, 'uptolike_id_number_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('email',
-            'email для регистрации', array($this, 'uptolike_email_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('email', 'email для регистрации', array($this, 'uptolike_email_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('on_main',
-            'На главной странице ', array($this, 'uptolike_on_main_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('on_main', 'На главной странице ', array($this, 'uptolike_on_main_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('on_page',
-            'На статических страницах', array($this, 'uptolike_on_page_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('on_page', 'На статических страницах', array($this, 'uptolike_on_page_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('on_post',
-            'На страницах записей', array($this, 'uptolike_on_post_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('on_post', 'На страницах записей', array($this, 'uptolike_on_post_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('on_archive',
-            'На страницах архивов', array($this, 'uptolike_on_archive_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('on_archive', 'На страницах архивов', array($this, 'uptolike_on_archive_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('on_special_pages',
-            'На спец. страницах <p class="utl_quest"><img class="utl_quest" src="/wp-content/plugins/uptolike-share/images/quest.png"><span class="utl_quest">Отображается только боковая панель на страницах, созданных плагинами (WooCommerce, WP-Shop и т.д.)</span></p>', array($this, 'uptolike_on_special_pages_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('on_special_pages', 'На спец. страницах <p class="utl_quest"><img class="utl_quest" src="/wp-content/plugins/uptolike-share/images/quest.png"><span class="utl_quest">Отображается только боковая панель на страницах, созданных плагинами (WooCommerce, WP-Shop и т.д.)</span></p>', array($this, 'uptolike_on_special_pages_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('widget_position',
-            'Расположение блока', array($this, 'uptolike_widget_position_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('widget_position', 'Расположение блока', array($this, 'uptolike_widget_position_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('widget_align',
-            'Выравнивание блока', array($this, 'uptolike_widget_align_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('widget_align', 'Выравнивание блока', array($this, 'uptolike_widget_align_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('widget_mode',
-            'Режим работы', array($this, 'uptolike_widget_mode_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('widget_mode', 'Режим работы', array($this, 'uptolike_widget_mode_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('utl_language',
-            'Язык', array($this, 'uptolike_utl_language_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('utl_language', 'Язык', array($this, 'uptolike_language_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('uptolike_json',
-            'настройки конструктора', array($this, 'uptolike_json_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('uptolike_json', 'настройки конструктора', array($this, 'uptolike_json_callback'), $this->settings_page_name, 'setting_section_id');
     }
 
     /**
@@ -278,7 +267,7 @@ class MySettingsPage {
      *
      * @param array $input Contains all settings fields as array keys
      */
-    public function sanitize($input) {
+    public function uptolike_sanitize($input) {
         $new_input = array();
         if (isset($input['id_number'])) $new_input['id_number'] = str_replace(' ', '', $input['id_number']);
 
@@ -308,7 +297,7 @@ class MySettingsPage {
             $new_input['on_archive'] = 1;
         } else $new_input['on_archive'] = 0;
 
-        if (isset($input['email'])) $new_input['email'] = $input['email'];
+        if (isset($input['email'])) $new_input['email'] = trim($input['email']);
 
         if (isset($input['after_content'])) $new_input['after_content'] = $input['after_content'];
 
@@ -327,22 +316,22 @@ class MySettingsPage {
     }
 
 
-    public function print_section_info() {
+    public function uptolike_print_section_info() {
     }
 
-    public function widget_code_callback() {
+    public function uptolike_widget_code_callback() {
         printf('<textarea id="widget_code" name="my_option_name[widget_code]" >%s</textarea>', isset($this->options['widget_code']) ? esc_attr($this->options['widget_code']) : '');
     }
 
     /** 12536473050877
      * Get the settings option array and print one of its values
      */
-    public function id_number_callback() {
+    public function uptolike_id_number_callback() {
         printf('<input type="text" class="id_number" name="my_option_name[id_number]" value="%s" />', isset($this->options['id_number']) ? esc_attr($this->options['id_number']) : '');
     }
 
     public function uptolike_email_callback() {
-        printf('<input type="text" id="uptolike_email" name="my_option_name[uptolike_email]" value="%s" />', isset($this->options['uptolike_email']) ? esc_attr($this->options['uptolike_email']) : '');
+        printf('<input type="text" id="uptolike_email" name="my_option_name[uptolike_email]" value="%s" />', isset($this->options['uptolike_email']) ? esc_attr(trim($this->options['uptolike_email'])) : '');
     }
 
     public function uptolike_json_callback() {
@@ -470,7 +459,7 @@ class MySettingsPage {
 
     }
 
-    public function uptolike_utl_language_callback() {
+    public function uptolike_language_callback() {
         $ru = $en = $ua = $de = $es = $it = $pl = $lt = '';
         if (isset($this->options['utl_language'])) {
             if ($this->options['utl_language'] == 'ru') {
@@ -510,22 +499,23 @@ class MySettingsPage {
     }
 }
 
-function get_widget_code($url = '') {
+function uptolike_get_widget_code($url = '') {
     $options = get_option('my_option_name');
     $widget_code = $options['widget_code'];
     $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0, strpos($_SERVER["SERVER_PROTOCOL"], '/'))) . '://';
     if ($url == '') {
         if (is_single() || is_page()) {
-            if(json_decode($options['uptolike_json'])->orientation != 2) {
+            if (json_decode($options['uptolike_json'])->orientation != 2) {
                 $url = get_permalink();
             } else {
-                if ($options['widget_mode'] == 'plg') {
+                if ($options['widget_mode'] == 'code') {
                     $url = the_permalink();
                 } else {
                     $url = get_permalink();
                 }
             }
-        } else $url = $protocol . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+        } else
+            $url = $protocol . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
     }
 
     if ($_SERVER["REQUEST_URI"] == '/' && !(json_decode($options['uptolike_json'])->orientation < 2) && !empty(json_decode($options['uptolike_json'])->orientation)) {
@@ -546,7 +536,7 @@ function get_widget_code($url = '') {
     return $widget_code;
 }
 
-function add_widget($content) {
+function uptolike_add_widget($content) {
     $options = get_option('my_option_name');
     $widget_mode = $options['widget_mode'];
     if (is_array($options) && (($widget_mode == 'plg') or ($widget_mode == 'both')) && array_key_exists('widget_code', $options)) {
@@ -555,11 +545,11 @@ function add_widget($content) {
                 if ($options['on_main'] == 1 && (home_url('/') == request_home_url())) {
                     switch ($options['widget_position']) {
                         case 'both':
-                            return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
+                            return uptolike_get_widget_code(get_permalink()) . $content . uptolike_get_widget_code(get_permalink());
                         case 'top':
-                            return get_widget_code(get_permalink()) . $content;
+                            return uptolike_get_widget_code(get_permalink()) . $content;
                         case 'bottom':
-                            return $content . get_widget_code(get_permalink());
+                            return $content . uptolike_get_widget_code(get_permalink());
                     }
                 } elseif ($options['on_main'] != 1 && (home_url('/') == request_home_url())) {
                     return $content;
@@ -567,29 +557,29 @@ function add_widget($content) {
             } elseif (is_page() && $options['on_page'] == 1 && (home_url('/') != request_home_url())) {
                 switch ($options['widget_position']) {
                     case 'both':
-                        return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
+                        return uptolike_get_widget_code(get_permalink()) . $content . uptolike_get_widget_code(get_permalink());
                     case 'top':
-                        return get_widget_code(get_permalink()) . $content;
+                        return uptolike_get_widget_code(get_permalink()) . $content;
                     case 'bottom':
-                        return $content . get_widget_code(get_permalink());
+                        return $content . uptolike_get_widget_code(get_permalink());
                 }
             } elseif (is_single() && $options['on_post'] == 1 && (home_url('/') != request_home_url())) {
                 switch ($options['widget_position']) {
                     case 'both':
-                        return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
+                        return uptolike_get_widget_code(get_permalink()) . $content . uptolike_get_widget_code(get_permalink());
                     case 'top':
-                        return get_widget_code(get_permalink()) . $content;
+                        return uptolike_get_widget_code(get_permalink()) . $content;
                     case 'bottom':
-                        return $content . get_widget_code(get_permalink());
+                        return $content . uptolike_get_widget_code(get_permalink());
                 }
             } elseif (is_archive() && $options['on_archive'] == 1 && $options['on_post'] == 1) {
                 switch ($options['widget_position']) {
                     case 'both':
-                        return get_widget_code(get_permalink()) . $content . get_widget_code(get_permalink());
+                        return uptolike_get_widget_code(get_permalink()) . $content . uptolike_get_widget_code(get_permalink());
                     case 'top':
-                        return get_widget_code(get_permalink()) . $content;
+                        return uptolike_get_widget_code(get_permalink()) . $content;
                     case 'bottom':
-                        return $content . get_widget_code(get_permalink());
+                        return $content . uptolike_get_widget_code(get_permalink());
                 }
             }
         } else { //if vertical panel
@@ -621,14 +611,14 @@ function uptolike_shortcode() {
     $options = get_option('my_option_name');
     $widget_mode = $options['widget_mode'];
     if (($widget_mode == 'code') or ($widget_mode == 'both')) {
-        return get_widget_code();
+        return uptolike_get_widget_code();
     }
     return;
 }
 
 add_shortcode('uptolike', 'uptolike_shortcode');
 
-function my_widgetcode_notice() {
+function uptolike_widgetcode_notice() {
     $options = get_option('my_option_name');
     if (is_array($options) && array_key_exists('widget_code', $options)) {
         $widget_code = $options['widget_code'];
@@ -640,12 +630,12 @@ function my_widgetcode_notice() {
     };
 }
 
-function try_reg() {
+function uptolike_try_reg() {
     include('api_functions.php');
     $domain = preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']);
     $options = get_option('my_option_name');
     $email = $options['uptolike_email'];
-    if ('' == $options['id_number']) {
+    if ($options['id_number'] == '') {
         $reg_ans = userReg($email, 'cms', 'cms' . $domain);
         if (is_string($reg_ans)) {
             $my_options = get_option('my_option_name');
@@ -657,9 +647,9 @@ function try_reg() {
     }
 }
 
-function my_choice_notice() {
+function uptolike_choice_notice() {
     $options = get_option('my_option_name');
-    if (is_bool($options) or (('' == $options['id_number']) and ((!array_key_exists('choice', $options)) OR ('ignore' !== $options['choice'])))) {
+    if (is_bool($options) or (($options['id_number'] == '') and ((!array_key_exists('choice', $options)) OR ($options['choice'] !== 'ignore')))) {
         echo "<div class='updated' style='
             background: #fff url(//uptolike.com/img/logo.png) no-repeat 2px;
             padding-left: 50px;
@@ -668,7 +658,7 @@ function my_choice_notice() {
     };
 }
 
-function set_default_code() {
+function uptolike_set_default_code() {
     $options = get_option('my_option_name');
     if (is_bool($options)) {
         $options = array();
@@ -710,25 +700,25 @@ EOD;
 function choice_helper($choice) {
     $options = get_option('my_option_name');
     $options['choice'] = $choice;
-    if ('ignore' == $choice) {
-        set_default_code();
+    if ($choice == 'ignore') {
+        uptolike_set_default_code();
     }
     update_option('my_option_name', $options);
 }
 
-function usb_admin_actions() {
+function uptolike_admin_actions() {
     if (current_user_can('manage_options')) {
         if (function_exists('add_meta_box')) {
-            add_menu_page("UpToLike", "UpToLike", "manage_options", "UpToLike", 'my_custom_menu_page', plugins_url('uptolike-share/images/logo-small.png'));
+            add_menu_page("UpToLike", "UpToLike", "manage_options", "UpToLike", 'uptolike_custom_menu_page', plugins_url('uptolike-share/images/logo-small.png'));
         }
     }
 }
 
-function my_custom_menu_page() {
+function uptolike_custom_menu_page() {
     include_once('usb-admin.php');
 }
 
-function request_home_url($url = '') {
+function uptolike_request_home_url($url = '') {
     $result = '';
     $default_port = 80;
     if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) {
@@ -748,7 +738,7 @@ function request_home_url($url = '') {
     return $result;
 }
 
-function headeruptolike() {
+function uptolike_header() {
     $options = get_option('my_option_name');
     if ((home_url('/') == request_home_url()) && $options['on_main'] == 1) {
         $in_content = array(0, 1);
@@ -756,16 +746,15 @@ function headeruptolike() {
         $curr_value = json_decode($options['uptolike_json'])->orientation;
         if (in_array($curr_value, $in_content)) {
         } elseif (in_array($curr_value, $in_fixed_block)) {
-            echo get_widget_code();
+            echo uptolike_get_widget_code();
         }
-    //вывод боковой панели uptolike для отдельных страниц, записей и специальных страниц
-    } elseif ((home_url('/') != request_home_url()) && ($options['on_special_pages'] == 1 || $options['on_page'] == 1 || $options['on_post'] = 1)) {
+    } elseif ((home_url('/') != request_home_url()) && ($options['on_special_pages'] == 1 || $options['on_page'] == 1)) {
         $in_content = array(0, 1);
         $in_fixed_block = array(2, 3, 4, 5);
         $curr_value = json_decode($options['uptolike_json'])->orientation;
         if (in_array($curr_value, $in_content)) {
         } elseif (in_array($curr_value, $in_fixed_block)) {
-            echo get_widget_code();
+            echo uptolike_get_widget_code();
         }
     }
 }
@@ -790,12 +779,12 @@ function uptolike_register_widgets() {
     register_widget('UptolikeWidget');
 }
 
-register_activation_hook(__FILE__, 'usb_admin_actions');
+register_activation_hook(__FILE__, 'uptolike_admin_actions');
 
 add_action('widgets_init', 'uptolike_register_widgets');
-add_action('admin_notices', 'my_choice_notice');
-add_action('admin_notices', 'my_widgetcode_notice');
-add_action('admin_menu', 'usb_admin_actions');
+add_action('admin_notices', 'uptolike_choice_notice');
+add_action('admin_notices', 'uptolike_widgetcode_notice');
+add_action('admin_menu', 'uptolike_admin_actions');
 
 if (is_admin()) {
     $options = get_option('my_option_name');
@@ -807,6 +796,6 @@ if (is_admin()) {
     }
     $my_settings_page = new MySettingsPage();
     if (is_bool($options) OR (!array_key_exists('widget_code', $options)) OR ($options['widget_code'] == '')) {
-        set_default_code();
+        uptolike_set_default_code();
     }
 }

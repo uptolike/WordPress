@@ -1,8 +1,7 @@
 <?php
 
-function constructorIframe($projectId, $partnerId, $mail, $cryptKey) {
+function uptolike_constructorIframe($projectId, $partnerId, $mail, $cryptKey) {
     $params = array('mail' => $mail, 'partner' => $partnerId, 'projectId' => $projectId);
-
     $paramsStr = 'mail=' . $mail . '&partner=' . $partnerId . '&projectId=' . $projectId . $cryptKey;
     $signature = md5($paramsStr);
     $params['signature'] = $signature;
@@ -13,7 +12,7 @@ function constructorIframe($projectId, $partnerId, $mail, $cryptKey) {
     return $finalUrl;
 }
 
-function statIframe($projectId, $partnerId, $mail, $cryptKey) {
+function uptolike_statIframe($projectId, $partnerId, $mail, $cryptKey) {
     $params = array('mail' => $mail, 'partner' => $partnerId, 'projectId' => $projectId,
 
     );
@@ -25,7 +24,7 @@ function statIframe($projectId, $partnerId, $mail, $cryptKey) {
     return $finalUrl;
 }
 
-function usb_admin_page() {
+function uptolike_admin_page() {
     $options = get_option('my_option_name');
 
     if ((isset($options['uptolike_email'])) && ('' !== $options['uptolike_email'])) {
@@ -69,7 +68,7 @@ function usb_admin_page() {
 
                 <div class="wrapper-tab active" id="con_construct">
                     <iframe id='cons_iframe' style='height: 445px;width: 100%;'
-                            data-src="<?php echo constructorIframe($projectId, $partnerId, $email, $cryptKey); ?>"></iframe>
+                            data-src="<?php echo uptolike_constructorIframe($projectId, $partnerId, $email, $cryptKey); ?>"></iframe>
                     <br>
                     <a onclick="getCode();" href="#">
                         <button type="reset">Сохранить изменения</button>
@@ -78,7 +77,7 @@ function usb_admin_page() {
                 <div class="wrapper-tab" id="con_stat">
 
                     <iframe style="width: 100%;height: 380px;" id="stats_iframe"
-                            data-src="<?php echo statIframe($projectId, $partnerId, $email, $cryptKey); ?>">
+                            data-src="<?php echo uptolike_statIframe($projectId, $partnerId, $email, $cryptKey); ?>">
                     </iframe>
 
                     <div id="before_key_req">Введите ваш адрес электронной почты для получения
@@ -132,7 +131,7 @@ function usb_admin_page() {
                     <div class="utl_left_block">
                         <?php
                         $my_settings_page = new MySettingsPage();
-                        $my_settings_page->page_init();
+                        $my_settings_page->uptolike_page_init();
                         settings_fields('my_option_group');
                         do_settings_sections($my_settings_page->settings_page_name);
                         ?>
@@ -184,4 +183,4 @@ function usb_admin_page() {
     <?php
 }
 
-usb_admin_page();
+uptolike_admin_page();

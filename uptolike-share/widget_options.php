@@ -11,7 +11,7 @@ class MySettingsPage {
     }
 
     public function uptolike_add_plugin_page() {
-        add_options_page('Settings Admin', 'UpToLike', 'manage_options', $this->settings_page_name, //'my-setting-admin',
+        add_options_page('UpToLike Settings', 'UpToLike', 'manage_options', $this->settings_page_name, //'my-setting-admin',
             array($this, 'uptolike_create_admin_page'));
     }
 
@@ -184,7 +184,7 @@ class MySettingsPage {
                         <div class="utl_right_block">
                             <div class="utl_blok1">
                                 <div class="utl_blok2">
-                                    <div class="utl_logo utl_i_logo">
+                                    <div class="utl_logo utl_i_logo" style="background-image: url('<?php echo plugin_dir_url(__FILE__);?>/images/plg_icons.png')">
                                     </div>
                                 </div>
                                 <div class="utl_innertext">Для вставки шорткода в .php файл шаблона
@@ -197,7 +197,7 @@ class MySettingsPage {
                             </div>
                             <div class="utl_blok1">
                                 <div class="utl_blok2">
-                                    <div class="utl_logo utl_like_logo">
+                                    <div class="utl_logo utl_like_logo" style="background-image: url('<?php echo plugin_dir_url(__FILE__);?>/images/plg_icons.png')">
                                     </div>
                                 </div>
                                 <div class="utl_innertext">Данный плагин полностью бесплатен. Мы
@@ -209,7 +209,7 @@ class MySettingsPage {
                             </div>
                             <div class="utl_blok1">
                                 <div class="utl_blok2">
-                                    <div class="utl_logo utl_mail_logo">
+                                    <div class="utl_logo utl_mail_logo" style="background-image: url('<?php echo plugin_dir_url(__FILE__);?>/images/plg_icons.png')">
                                     </div>
                                 </div>
                                 <div class="utl_innertext"><a
@@ -249,7 +249,7 @@ class MySettingsPage {
 
         add_settings_field('on_archive', 'На страницах архивов', array($this, 'uptolike_on_archive_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('on_special_pages', 'На спец. страницах <p class="utl_quest"><img class="utl_quest" src="/wp-content/plugins/uptolike-share/images/quest.png"><span class="utl_quest">Отображается только боковая панель на страницах, созданных плагинами (WooCommerce, WP-Shop и т.д.)</span></p>', array($this, 'uptolike_on_special_pages_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('on_special_pages', 'На спец. страницах <p class="utl_quest"><img class="utl_quest" src="'. plugin_dir_url(__FILE__) .'/images/quest.png"><span class="utl_quest">Отображается только боковая панель на страницах, созданных плагинами (WooCommerce, WP-Shop и т.д.)</span></p>', array($this, 'uptolike_on_special_pages_callback'), $this->settings_page_name, 'setting_section_id');
 
         add_settings_field('widget_position', 'Расположение блока', array($this, 'uptolike_widget_position_callback'), $this->settings_page_name, 'setting_section_id');
 
@@ -709,13 +709,20 @@ function choice_helper($choice) {
 function uptolike_admin_actions() {
     if (current_user_can('manage_options')) {
         if (function_exists('add_meta_box')) {
-            add_menu_page("UpToLike", "UpToLike", "manage_options", "UpToLike", 'uptolike_custom_menu_page', plugins_url('uptolike-share/images/logo-small.png'));
+            add_menu_page("UpToLike Settings", "UpToLike", "manage_options", "uptolike_settings", 'uptolike_custom_menu_page', plugin_dir_url(__FILE__). '/images/logo-small.png');
         }
     }
 }
 
+// функция отвечает за вывод страницы настроек
 function uptolike_custom_menu_page() {
-    include_once('usb-admin.php');
+    $uptolike_settings_page = new myFirstPluginSettingsPage();
+    if (!isset($uptolike_settings_page)) {
+        wp_die(__('Plugin UpToLike has been installed incorrectly.'));
+    }
+    if (function_exists('add_plugins_page')) {
+        add_plugins_page('UpToLike Settings', 'UpToLike', 'manage_options', basename(__FILE__), array(&$uptolike_settings_page, 'uptolike_create_admin_page'));
+    }
 }
 
 function request_home_url($url = '') {
@@ -789,7 +796,7 @@ add_action('admin_menu', 'uptolike_admin_actions');
 if (is_admin()) {
     $options = get_option('my_option_name');
     if (array_key_exists('regme', $_REQUEST)) {
-        try_reg();
+        uptolike_try_reg();
     }
     if (array_key_exists('choice', $_REQUEST)) {
         choice_helper($_REQUEST['choice']);

@@ -585,19 +585,19 @@ function uptolike_add_widget($content) {
         } else { //if vertical panel
             if (is_front_page() || is_home()) {
                 if ($options['on_main'] == 1 && (home_url('/') == request_home_url())) {
-                    add_action('wp_footer', 'headeruptolike');
+                    add_action('wp_footer', 'uptolike_header');
                 }
             } elseif (is_page()) {
                 if ($options['on_page'] == 1 && (home_url('/') != request_home_url())) {
-                    add_action('wp_footer', 'headeruptolike');
+                    add_action('wp_footer', 'uptolike_header');
                 }
             } elseif (is_single()) {
                 if ($options['on_post'] == 1 && (home_url('/') != request_home_url())) {
-                    add_action('wp_footer', 'headeruptolike');
+                    add_action('wp_footer', 'uptolike_header');
                 }
             } elseif (is_archive()) {
                 if ($options['on_archive'] == 1 && $options['on_post'] == 1 && (home_url('/') != request_home_url())) {
-                    add_action('wp_footer', 'headeruptolike');
+                    add_action('wp_footer', 'uptolike_header');
                 }
             }
         }
@@ -718,7 +718,7 @@ function uptolike_custom_menu_page() {
     include_once('usb-admin.php');
 }
 
-function uptolike_request_home_url($url = '') {
+function request_home_url($url = '') {
     $result = '';
     $default_port = 80;
     if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) {

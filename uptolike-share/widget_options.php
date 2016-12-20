@@ -605,7 +605,7 @@ function uptolike_add_widget($content) {
     return $content;
 }
 
-add_filter('the_content', 'add_widget', 100);
+add_filter('the_content', 'uptolike_add_widget', 100);
 
 function uptolike_shortcode() {
     $options = get_option('my_option_name');

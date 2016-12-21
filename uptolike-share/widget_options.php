@@ -184,7 +184,8 @@ class MySettingsPage {
                         <div class="utl_right_block">
                             <div class="utl_blok1">
                                 <div class="utl_blok2">
-                                    <div class="utl_logo utl_i_logo" style="background-image: url('<?php echo plugin_dir_url(__FILE__);?>/images/plg_icons.png')">
+                                    <div class="utl_logo utl_i_logo"
+                                         style="background-image: url('<?php echo plugin_dir_url(__FILE__); ?>/images/plg_icons.png')">
                                     </div>
                                 </div>
                                 <div class="utl_innertext">Для вставки шорткода в .php файл шаблона
@@ -197,7 +198,8 @@ class MySettingsPage {
                             </div>
                             <div class="utl_blok1">
                                 <div class="utl_blok2">
-                                    <div class="utl_logo utl_like_logo" style="background-image: url('<?php echo plugin_dir_url(__FILE__);?>/images/plg_icons.png')">
+                                    <div class="utl_logo utl_like_logo"
+                                         style="background-image: url('<?php echo plugin_dir_url(__FILE__); ?>/images/plg_icons.png')">
                                     </div>
                                 </div>
                                 <div class="utl_innertext">Данный плагин полностью бесплатен. Мы
@@ -209,7 +211,8 @@ class MySettingsPage {
                             </div>
                             <div class="utl_blok1">
                                 <div class="utl_blok2">
-                                    <div class="utl_logo utl_mail_logo" style="background-image: url('<?php echo plugin_dir_url(__FILE__);?>/images/plg_icons.png')">
+                                    <div class="utl_logo utl_mail_logo"
+                                         style="background-image: url('<?php echo plugin_dir_url(__FILE__); ?>/images/plg_icons.png')">
                                     </div>
                                 </div>
                                 <div class="utl_innertext"><a
@@ -249,7 +252,7 @@ class MySettingsPage {
 
         add_settings_field('on_archive', 'На страницах архивов', array($this, 'uptolike_on_archive_callback'), $this->settings_page_name, 'setting_section_id');
 
-        add_settings_field('on_special_pages', 'На спец. страницах <p class="utl_quest"><img class="utl_quest" src="'. plugin_dir_url(__FILE__) .'/images/quest.png"><span class="utl_quest">Отображается только боковая панель на страницах, созданных плагинами (WooCommerce, WP-Shop и т.д.)</span></p>', array($this, 'uptolike_on_special_pages_callback'), $this->settings_page_name, 'setting_section_id');
+        add_settings_field('on_special_pages', 'На спец. страницах <p class="utl_quest"><img class="utl_quest" src="' . plugin_dir_url(__FILE__) . '/images/quest.png"><span class="utl_quest">Отображается только боковая панель на страницах, созданных плагинами (WooCommerce, WP-Shop и т.д.)</span></p>', array($this, 'uptolike_on_special_pages_callback'), $this->settings_page_name, 'setting_section_id');
 
         add_settings_field('widget_position', 'Расположение блока', array($this, 'uptolike_widget_position_callback'), $this->settings_page_name, 'setting_section_id');
 
@@ -553,6 +556,15 @@ function uptolike_add_widget($content) {
                     }
                 } elseif ($options['on_main'] != 1 && (home_url('/') == request_home_url())) {
                     return $content;
+                } elseif ($options['on_page'] == 1 && home_url('/') != request_home_url()){
+                    switch ($options['widget_position']) {
+                        case 'both':
+                            return uptolike_get_widget_code(get_permalink()) . $content . uptolike_get_widget_code(get_permalink());
+                        case 'top':
+                            return uptolike_get_widget_code(get_permalink()) . $content;
+                        case 'bottom':
+                            return $content . uptolike_get_widget_code(get_permalink());
+                    }
                 }
             } elseif (is_page() && $options['on_page'] == 1 && (home_url('/') != request_home_url())) {
                 switch ($options['widget_position']) {
@@ -585,6 +597,8 @@ function uptolike_add_widget($content) {
         } else { //if vertical panel
             if (is_front_page() || is_home()) {
                 if ($options['on_main'] == 1 && (home_url('/') == request_home_url())) {
+                    add_action('wp_footer', 'uptolike_header');
+                } elseif ($options['on_page'] == 1 && home_url('/') != request_home_url()) {
                     add_action('wp_footer', 'uptolike_header');
                 }
             } elseif (is_page()) {
@@ -709,7 +723,7 @@ function choice_helper($choice) {
 function uptolike_admin_actions() {
     if (current_user_can('manage_options')) {
         if (function_exists('add_meta_box')) {
-            add_menu_page("UpToLike Settings", "UpToLike", "manage_options", "uptolike_settings", 'uptolike_custom_menu_page', plugin_dir_url(__FILE__). '/images/logo-small.png');
+            add_menu_page("UpToLike Settings", "UpToLike", "manage_options", "uptolike_settings", 'uptolike_custom_menu_page', plugin_dir_url(__FILE__) . '/images/logo-small.png');
         }
     }
 }
@@ -760,6 +774,7 @@ function uptolike_header() {
         $in_fixed_block = array(2, 3, 4, 5);
         $curr_value = json_decode($options['uptolike_json'])->orientation;
         if (in_array($curr_value, $in_content)) {
+            echo uptolike_get_widget_code();
         } elseif (in_array($curr_value, $in_fixed_block)) {
             echo uptolike_get_widget_code();
         }

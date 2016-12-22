@@ -31,3 +31,15 @@ function my_plugin_description_links($links, $file) {
     $links[] = '<a href="' . add_query_arg(array('page' => 'uptolike_settings'), admin_url('plugins.php')) . '">' . __('Settings') . '</a>';
     return $links;
 }
+
+register_activation_hook( __FILE__, 'uptolike_install' );
+
+function uptolike_install() {
+    $options = get_option('my_option_name');
+    if (!is_bool($options)) {
+        $options['uptolike_email'] = '';
+        $options['id_number'] = '';
+        update_option('uptolike_options', $options);
+        delete_option('my_option_name');
+    }
+}

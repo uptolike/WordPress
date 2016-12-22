@@ -7,7 +7,7 @@ class MySettingsPage {
     public function __construct() {
         add_action('admin_menu', array($this, 'uptolike_add_plugin_page'));
         add_action('admin_init', array($this, 'uptolike_page_init'));
-        $this->options = get_option('my_option_name');
+        $this->options = get_option('uptolike_options');
     }
 
     public function uptolike_add_plugin_page() {
@@ -76,7 +76,7 @@ class MySettingsPage {
     /** render html page with code configuration settings
      */
     public function uptolike_create_admin_page() {
-        $this->options = get_option('my_option_name');
+        $this->options = get_option('uptolike_options');
         if ((isset($this->options['uptolike_email'])) && ('' !== $this->options['uptolike_email'])) {
             $email = $this->options['uptolike_email'];
         } else $email = get_option('admin_email');
@@ -84,7 +84,7 @@ class MySettingsPage {
         $projectId = 'cms' . preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']);
         $projectId = str_replace('.', '', $projectId);
         $projectId = str_replace('-', '', $projectId);
-        $options = get_option('my_option_name');
+        $options = get_option('uptolike_options');
         if (is_array($options) && array_key_exists('id_number', $options)) {
             $cryptKey = $options['id_number'];
         } else $cryptKey = '';
@@ -233,7 +233,7 @@ class MySettingsPage {
     }
 
     public function uptolike_page_init() {
-        register_setting('my_option_group', 'my_option_name', array($this, 'uptolike_sanitize'));
+        register_setting('my_option_group', 'uptolike_options', array($this, 'uptolike_sanitize'));
 
         add_settings_section('setting_section_id', 'Настройки отображения блока Uptolike', array($this, 'uptolike_print_section_info'), $this->settings_page_name);
 
@@ -323,58 +323,58 @@ class MySettingsPage {
     }
 
     public function uptolike_widget_code_callback() {
-        printf('<textarea id="widget_code" name="my_option_name[widget_code]" >%s</textarea>', isset($this->options['widget_code']) ? esc_attr($this->options['widget_code']) : '');
+        printf('<textarea id="widget_code" name="uptolike_options[widget_code]" >%s</textarea>', isset($this->options['widget_code']) ? esc_attr($this->options['widget_code']) : '');
     }
 
     /** 12536473050877
      * Get the settings option array and print one of its values
      */
     public function uptolike_id_number_callback() {
-        printf('<input type="text" class="id_number" name="my_option_name[id_number]" value="%s" />', isset($this->options['id_number']) ? esc_attr($this->options['id_number']) : '');
+        printf('<input type="text" class="id_number" name="uptolike_options[id_number]" value="%s" />', isset($this->options['id_number']) ? esc_attr($this->options['id_number']) : '');
     }
 
     public function uptolike_email_callback() {
-        printf('<input type="text" id="uptolike_email" name="my_option_name[uptolike_email]" value="%s" />', isset($this->options['uptolike_email']) ? esc_attr(trim($this->options['uptolike_email'])) : '');
+        printf('<input type="text" id="uptolike_email" name="uptolike_options[uptolike_email]" value="%s" />', isset($this->options['uptolike_email']) ? esc_attr(trim($this->options['uptolike_email'])) : '');
     }
 
     public function uptolike_json_callback() {
-        printf('<input type="hidden" id="uptolike_json" name="my_option_name[uptolike_json]" value="%s" />', isset($this->options['uptolike_json']) ? esc_attr($this->options['uptolike_json']) : '');
+        printf('<input type="hidden" id="uptolike_json" name="uptolike_options[uptolike_json]" value="%s" />', isset($this->options['uptolike_json']) ? esc_attr($this->options['uptolike_json']) : '');
     }
 
     public function uptolike_partner_id_callback() {
-        printf('<input type="text" id="uptolike_partner" name="my_option_name[uptolike_partner]" value="%s" />', isset($this->options['uptolike_partner']) ? esc_attr($this->options['uptolike_partner']) : '');
+        printf('<input type="text" id="uptolike_partner" name="uptolike_options[uptolike_partner]" value="%s" />', isset($this->options['uptolike_partner']) ? esc_attr($this->options['uptolike_partner']) : '');
     }
 
     public function uptolike_project_callback() {
-        printf('<input type="text" id="uptolike_project" name="my_option_name[uptolike_project]" value="%s" />', isset($this->options['uptolike_project']) ? esc_attr($this->options['uptolike_project']) : '');
+        printf('<input type="text" id="uptolike_project" name="uptolike_options[uptolike_project]" value="%s" />', isset($this->options['uptolike_project']) ? esc_attr($this->options['uptolike_project']) : '');
     }
 
     public function uptolike_on_main_callback() {
-        echo '<input type="checkbox" id="on_main" name="my_option_name[on_main]"';
+        echo '<input type="checkbox" id="on_main" name="uptolike_options[on_main]"';
         echo($this->options['on_main'] == '1' ? 'checked="checked"' : '');
         echo '/>';
     }
 
     public function uptolike_on_page_callback() {
-        echo '<input type="checkbox" id="on_page" name="my_option_name[on_page]"';
+        echo '<input type="checkbox" id="on_page" name="uptolike_options[on_page]"';
         echo($this->options['on_page'] == '1' ? 'checked="checked"' : '');
         echo '/>';
     }
 
     public function uptolike_on_post_callback() {
-        echo '<input type="checkbox" id="on_post" name="my_option_name[on_post]"';
+        echo '<input type="checkbox" id="on_post" name="uptolike_options[on_post]"';
         echo($this->options['on_post'] == '1' ? 'checked="checked"' : '');
         echo '/>';
     }
 
     public function uptolike_on_special_pages_callback() {
-        echo '<input type="checkbox" id="on_special_pages" name="my_option_name[on_special_pages]"';
+        echo '<input type="checkbox" id="on_special_pages" name="uptolike_options[on_special_pages]"';
         echo($this->options['on_special_pages'] == '1' ? 'checked="checked"' : '');
         echo '/>';
     }
 
     public function uptolike_on_archive_callback() {
-        echo '<input type="checkbox" id="on_archive" name="my_option_name[on_archive]"';
+        echo '<input type="checkbox" id="on_archive" name="uptolike_options[on_archive]"';
         echo($this->options['on_archive'] == '1' ? 'checked="checked"' : '');
         echo '/>';
     }
@@ -391,11 +391,11 @@ class MySettingsPage {
                 $both_mode = "selected='selected'";
             }
         } else {
-            $my_options = get_option('my_option_name');
-            $my_options['widget_mode'] = 'plg'; // cryptkey store
-            update_option('my_option_name', $my_options);
+            $uptolike_options = get_option('uptolike_options');
+            $uptolike_options['widget_mode'] = 'plg'; // cryptkey store
+            update_option('uptolike_options', $uptolike_options);
         }
-        echo "<select id='widget_mode' name='my_option_name[widget_mode]'>
+        echo "<select id='widget_mode' name='uptolike_options[widget_mode]'>
                             <option {$plg_mode} value='plg'>Плагин</option>
                             <option {$code_mode} value='code'>Шорткод</option>
                             <option {$both_mode} value='both'>Плагин и шорткод</option>
@@ -414,12 +414,12 @@ class MySettingsPage {
                 $center = "selected='selected'";
             }
         } else {
-            $my_options = get_option('my_option_name');
-            $my_options['widget_align'] = 'left'; // cryptkey store
-            update_option('my_option_name', $my_options);
+            $uptolike_options = get_option('uptolike_options');
+            $uptolike_options['widget_align'] = 'left'; // cryptkey store
+            update_option('uptolike_options', $uptolike_options);
         }
 
-        echo "<select id='widget_align' name='my_option_name[widget_align]'>
+        echo "<select id='widget_align' name='uptolike_options[widget_align]'>
                             <option {$left} value='left'>По левому краю</option>
                             <option {$right} value='right'>По правому краю</option>
                             <option {$center} value='center'>По центру</option>
@@ -440,19 +440,19 @@ class MySettingsPage {
                 } else {
                     $both = '';
                     $bottom = "selected='selected'";
-                    $my_options = get_option('my_option_name');
-                    $my_options['widget_position'] = 'bottom'; // cryptkey store
-                    update_option('my_option_name', $my_options);
+                    $uptolike_options = get_option('uptolike_options');
+                    $uptolike_options['widget_position'] = 'bottom'; // cryptkey store
+                    update_option('uptolike_options', $uptolike_options);
                 }
             } else {
                 $bottom = "selected='selected'";
             }
         } else {
-            $my_options = get_option('my_option_name');
-            $my_options['widget_position'] = 'bottom'; // cryptkey store
-            update_option('my_option_name', $my_options);
+            $uptolike_options = get_option('uptolike_options');
+            $uptolike_options['widget_position'] = 'bottom'; // cryptkey store
+            update_option('uptolike_options', $uptolike_options);
         }
-        echo "<select id='widget_position' name='my_option_name[widget_position]'>
+        echo "<select id='widget_position' name='uptolike_options[widget_position]'>
             <option {$top} value='top'>Только сверху</option>
             <option {$bottom} value='bottom'>Только снизу</option>";
         if (json_decode($this->options['uptolike_json'])->orientation < 2) {
@@ -485,11 +485,11 @@ class MySettingsPage {
                 $ru = "selected='selected'";
             }
         } else {
-            $my_options = get_option('my_option_name');
-            $my_options['utl_language'] = 'ru'; // cryptkey store
-            update_option('my_option_name', $my_options);
+            $uptolike_options = get_option('uptolike_options');
+            $uptolike_options['utl_language'] = 'ru'; // cryptkey store
+            update_option('uptolike_options', $uptolike_options);
         }
-        echo "<select id='widget_position' name='my_option_name[utl_language]'>
+        echo "<select id='widget_position' name='uptolike_options[utl_language]'>
                     <option {$ru} value='ru'>Русский</option>
                     <option {$en} value='en'>Английский</option>
                     <option {$ua} value='ua'>Украинский</option>
@@ -503,7 +503,7 @@ class MySettingsPage {
 }
 
 function uptolike_get_widget_code($url = '') {
-    $options = get_option('my_option_name');
+    $options = get_option('uptolike_options');
     $widget_code = $options['widget_code'];
     $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0, strpos($_SERVER["SERVER_PROTOCOL"], '/'))) . '://';
     if ($url == '') {
@@ -540,7 +540,7 @@ function uptolike_get_widget_code($url = '') {
 }
 
 function uptolike_add_widget($content) {
-    $options = get_option('my_option_name');
+    $options = get_option('uptolike_options');
     $widget_mode = $options['widget_mode'];
     if (is_array($options) && (($widget_mode == 'plg') or ($widget_mode == 'both')) && array_key_exists('widget_code', $options)) {
         if ((!empty(json_decode($options['uptolike_json'])->orientation) && json_decode($options['uptolike_json'])->orientation < 2) || !(isset(json_decode($options['uptolike_json'])->orientation))) {
@@ -622,7 +622,7 @@ function uptolike_add_widget($content) {
 add_filter('the_content', 'uptolike_add_widget', 100);
 
 function uptolike_shortcode() {
-    $options = get_option('my_option_name');
+    $options = get_option('uptolike_options');
     $widget_mode = $options['widget_mode'];
     if (($widget_mode == 'code') or ($widget_mode == 'both')) {
         return uptolike_get_widget_code();
@@ -633,7 +633,7 @@ function uptolike_shortcode() {
 add_shortcode('uptolike', 'uptolike_shortcode');
 
 function uptolike_widgetcode_notice() {
-    $options = get_option('my_option_name');
+    $options = get_option('uptolike_options');
     if (is_array($options) && array_key_exists('widget_code', $options)) {
         $widget_code = $options['widget_code'];
         if ($widget_code == '') {
@@ -647,22 +647,22 @@ function uptolike_widgetcode_notice() {
 function uptolike_try_reg() {
     include('api_functions.php');
     $domain = preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']);
-    $options = get_option('my_option_name');
+    $options = get_option('uptolike_options');
     $email = $options['uptolike_email'];
     if ($options['id_number'] == '') {
         $reg_ans = userReg($email, 'cms', 'cms' . $domain);
         if (is_string($reg_ans)) {
-            $my_options = get_option('my_option_name');
-            $my_options['id_number'] = $reg_ans; // cryptkey store
-            $my_options['choice'] = 'reg';
-            update_option('my_option_name', $my_options);
+            $uptolike_options = get_option('uptolike_options');
+            $uptolike_options['id_number'] = $reg_ans; // cryptkey store
+            $uptolike_options['choice'] = 'reg';
+            update_option('uptolike_options', $uptolike_options);
         };
         update_option('regme', true);
     }
 }
 
 function uptolike_choice_notice() {
-    $options = get_option('my_option_name');
+    $options = get_option('uptolike_options');
     if (is_bool($options) or (($options['id_number'] == '') and ((!array_key_exists('choice', $options)) OR ($options['choice'] !== 'ignore')))) {
         echo "<div class='updated' style='
             background: #fff url(//uptolike.com/img/logo.png) no-repeat 2px;
@@ -673,7 +673,7 @@ function uptolike_choice_notice() {
 }
 
 function uptolike_set_default_code() {
-    $options = get_option('my_option_name');
+    $options = get_option('uptolike_options');
     if (is_bool($options)) {
         $options = array();
     }
@@ -708,16 +708,16 @@ EOD;
     $options['widget_mode'] = 'plg';
     $options['widget_align'] = 'left';
     $options['utl_language'] = 'ru';
-    update_option('my_option_name', $options);
+    update_option('uptolike_options', $options);
 }
 
 function choice_helper($choice) {
-    $options = get_option('my_option_name');
+    $options = get_option('uptolike_options');
     $options['choice'] = $choice;
     if ($choice == 'ignore') {
         uptolike_set_default_code();
     }
-    update_option('my_option_name', $options);
+    update_option('uptolike_options', $options);
 }
 
 function uptolike_admin_actions() {
@@ -760,7 +760,7 @@ function request_home_url($url = '') {
 }
 
 function uptolike_header() {
-    $options = get_option('my_option_name');
+    $options = get_option('uptolike_options');
     if ((home_url('/') == request_home_url()) && $options['on_main'] == 1) {
         $in_content = array(0, 1);
         $in_fixed_block = array(2, 3, 4, 5);
@@ -809,7 +809,7 @@ add_action('admin_notices', 'uptolike_widgetcode_notice');
 add_action('admin_menu', 'uptolike_admin_actions');
 
 if (is_admin()) {
-    $options = get_option('my_option_name');
+    $options = get_option('uptolike_options');
     if (array_key_exists('regme', $_REQUEST)) {
         uptolike_try_reg();
     }

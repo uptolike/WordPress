@@ -1,6 +1,6 @@
 <?php
 
-class MySettingsPage {
+class UptolikeSettingsPage {
     public $options;
     public $settings_page_name = 'uptolike_settings';
 
@@ -644,13 +644,33 @@ function uptolike_widgetcode_notice() {
     };
 }
 
+/**
+ * @param $email
+ * @param $partnerId 'cms' for cms modules
+ * @param $projectId 'cms'.site name
+ *
+ * @return bool|string 'if false - somthing wrong, if string - it's cryptkey'
+ */
+function uptolike_user_reg($email, $partnerId, $projectId) {
+
+    if ($email !== '' && $partnerId !== '' && $projectId !== '') {
+        $url = 'https://uptolike.com/api/getCryptKeyWithUserReg.json?' . http_build_query(array('email' => $email, 'partner' => $partnerId, 'projectId' => $projectId));
+
+        $jsonAnswer = file_get_contents($url);
+        if (false !== $jsonAnswer) {
+            $answer = json_decode($jsonAnswer);
+            return $answer->cryptKey;
+        } else return $jsonAnswer;
+
+    } else return 'one of params is empty';
+}
+
 function uptolike_try_reg() {
-    include('api_functions.php');
     $domain = preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']);
     $options = get_option('uptolike_options');
     $email = $options['uptolike_email'];
     if ($options['id_number'] == '') {
-        $reg_ans = userReg($email, 'cms', 'cms' . $domain);
+        $reg_ans = uptolike_user_reg($email, 'cms', 'cms' . $domain);
         if (is_string($reg_ans)) {
             $uptolike_options = get_option('uptolike_options');
             $uptolike_options['id_number'] = $reg_ans; // cryptkey store
@@ -711,7 +731,7 @@ EOD;
     update_option('uptolike_options', $options);
 }
 
-function choice_helper($choice) {
+function uptolike_choice_helper($choice) {
     $options = get_option('uptolike_options');
     $options['choice'] = $choice;
     if ($choice == 'ignore') {
@@ -730,7 +750,7 @@ function uptolike_admin_actions() {
 
 // функция отвечает за вывод страницы настроек
 function uptolike_custom_menu_page() {
-    $uptolike_settings_page = new myFirstPluginSettingsPage();
+    $uptolike_settings_page = new UptolikeSettingsPage();
     if (!isset($uptolike_settings_page)) {
         wp_die(__('Plugin UpToLike has been installed incorrectly.'));
     }
@@ -814,9 +834,9 @@ if (is_admin()) {
         uptolike_try_reg();
     }
     if (array_key_exists('choice', $_REQUEST)) {
-        choice_helper($_REQUEST['choice']);
+        uptolike_choice_helper($_REQUEST['choice']);
     }
-    $my_settings_page = new MySettingsPage();
+    $uptolike_settings_page = new UptolikeSettingsPage();
     if (is_bool($options) OR (!array_key_exists('widget_code', $options)) OR ($options['widget_code'] == '')) {
         uptolike_set_default_code();
     }

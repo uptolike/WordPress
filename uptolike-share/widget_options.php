@@ -556,7 +556,7 @@ function uptolike_add_widget($content) {
                     }
                 } elseif ($options['on_main'] != 1 && (home_url('/') == request_home_url())) {
                     return $content;
-                } elseif ($options['on_page'] == 1 && home_url('/') != request_home_url()){
+                } elseif ($options['on_page'] == 1 && home_url('/') != request_home_url()) {
                     switch ($options['widget_position']) {
                         case 'both':
                             return uptolike_get_widget_code(get_permalink()) . $content . uptolike_get_widget_code(get_permalink());
@@ -790,6 +790,15 @@ function uptolike_header() {
             echo uptolike_get_widget_code();
         }
     } elseif ((home_url('/') != request_home_url()) && ($options['on_special_pages'] == 1 || $options['on_page'] == 1)) {
+        $in_content = array(0, 1);
+        $in_fixed_block = array(2, 3, 4, 5);
+        $curr_value = json_decode($options['uptolike_json'])->orientation;
+        if (in_array($curr_value, $in_content)) {
+            echo uptolike_get_widget_code();
+        } elseif (in_array($curr_value, $in_fixed_block)) {
+            echo uptolike_get_widget_code();
+        }
+    } elseif ((home_url('/') != request_home_url()) && ($options['on_post'] == 1)) {
         $in_content = array(0, 1);
         $in_fixed_block = array(2, 3, 4, 5);
         $curr_value = json_decode($options['uptolike_json'])->orientation;

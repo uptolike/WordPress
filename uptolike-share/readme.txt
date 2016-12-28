@@ -111,6 +111,7 @@ Answers to Frequently Asked Questions you can find at http://uptolike.ru/faq
 * Исправлен вывод UpToLike для страниц записей и статических страниц
 * Добавлено удаление лишних пробелов в поле email на странице статистики
 * Все ссылки в плагине исправлены на абсолютные
+* Исправлен WidgetClass name notice
 * Code refactoring
 
 = 1.5.4 =

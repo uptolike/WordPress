@@ -112,6 +112,7 @@ Answers to Frequently Asked Questions you can find at http://uptolike.ru/faq
 * Исправлен некорректный вывод боковой панели UpToLike для статических страниц
 * Добавлено удаление лишних пробелов в поле email на странице статистики
 * Все ссылки в плагине исправлены на абсолютные
+* Исправлены WidgetClass name notice
 * Code refactoring
 
 ####1.5.4

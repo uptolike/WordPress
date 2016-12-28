@@ -33,6 +33,15 @@ function uptolike_description_links($links, $file) {
 }
 
 register_activation_hook( __FILE__, 'uptolike_install' );
+register_uninstall_hook( __FILE__, 'uptolike_delete_plugin' );
+
+function uptolike_delete_plugin() {
+    $delete = get_option('uptolike_options');
+    $delete['uptolike_email'] = '';
+    $delete['id_number'] = '';
+    update_option('uptolike_options', $delete);
+}
+
 
 function uptolike_install() {
     $options = get_option('my_option_name');

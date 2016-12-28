@@ -11,8 +11,7 @@ class UptolikeSettingsPage {
     }
 
     public function uptolike_add_plugin_page() {
-        add_options_page('UpToLike Settings', 'UpToLike', 'manage_options', $this->settings_page_name, //'my-setting-admin',
-            array($this, 'uptolike_create_admin_page'));
+        add_options_page('UpToLike Settings', 'UpToLike', 'manage_options', $this->settings_page_name, array($this, 'uptolike_create_admin_page'));
     }
 
     /** creates url of iframe with statistics page from given params
@@ -689,7 +688,7 @@ function uptolike_try_reg() {
 
 function uptolike_choice_notice() {
     $options = get_option('uptolike_options');
-    if (is_bool($options) or (($options['id_number'] == '') and ((!array_key_exists('choice', $options)) OR ($options['choice'] !== 'ignore')))) {
+    if (is_bool($options) or ((!isset($options['id_number']) || $options['id_number'] == '') and ((!array_key_exists('choice', $options)) OR ($options['choice'] !== 'ignore')))) {
         echo "<div class='updated' style='
             background: #fff url(//uptolike.com/img/logo.png) no-repeat 2px;
             padding-left: 50px;
@@ -816,10 +815,10 @@ function uptolike_header() {
     }
 }
 
-class UptolikeWidget extends WP_Widget {
+class Uptolike_Widget extends WP_Widget {
 
-    function UptolikeWidget() {
-        parent::__construct(false, 'Блок кнопок UpToLike');
+    function __construct() {
+        parent::__construct('', 'Блок кнопок UpToLike');
     }
 
     function widget($args, $instance) {
@@ -833,7 +832,7 @@ class UptolikeWidget extends WP_Widget {
 }
 
 function uptolike_register_widgets() {
-    register_widget('UptolikeWidget');
+    register_widget('Uptolike_Widget');
 }
 
 register_activation_hook(__FILE__, 'uptolike_admin_actions');

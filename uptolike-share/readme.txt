@@ -3,7 +3,7 @@ Contributors: Uptolike Team
 Tags: +1, UpToLike, AddThis, social buttons, bookmark, bookmarking, like, share, share button, sharing, social bookmarking, social bookmarks, кнопки соцсетей, социальные кнопки
 Requires at least: 3.0.1
 Tested up to: 4.7
-Stable tag: 1.5.5
+Stable tag: 1.5.7
 
 Uptolike Social Share Buttons - social bookmarking widget with sharing statistics.
 
@@ -29,13 +29,13 @@ Uptolike поддерживает 25 популярных социальных �
 **Уникальные фишки Uptolike**
 
 * Полная кастомизация социальных кнопок:
-    1. 3 формы
-    2. 3 размера
-    3. эффект при наведении (увеличение, поворот по часовой стрелке)
-    4. 14 стилей кнопок
-    5. настройка фона кнопок
-    6. выбор цвета текста
-    7. установка размера текста счётчика
+    - 3 формы
+    - 3 размера
+    - эффект при наведении (увеличение, поворот по часовой стрелке)
+    - 14 стилей кнопок
+    - настройка фона кнопок
+    - выбор цвета текста
+    - установка размера текста счётчика
 
 * Функция фолловинга
 * Функция цитирования по тексту – выделенный участок текста автоматически предлагается расшарить в социальной сети
@@ -65,13 +65,13 @@ UpToLike is compatible with 25 popular social networking sites. It supports the 
 **Unique Functions of UpToLike Social Share Buttons**
 
 * Customization of social buttons:
-    1. 3 different shapes
-    2. 3 sizes
-    3. Hover effect (increase, clockwise rotation)
-    4. 14 button styles
-    5. Button background
-    6. Text color
-    7. Text size of the counter
+    - 3 different shapes
+    - 3 sizes
+    - Hover effect (increase, clockwise rotation)
+    - 14 button styles
+    - Button background
+    - Text color
+    - Text size of the counter
 
 * Social Media Following
 * Automatic text selection: the system gives you the option to share a highlighted piece of text on a social network
@@ -107,6 +107,12 @@ Answers to Frequently Asked Questions you can find at http://uptolike.ru/faq
 3. Traffic and sharing statistics
 
 == Changelog ==
+= 1.5.7 =
+* Исправленна генерация ссылок при расположении виджета Боковой панелью.
+
+= 1.5.6 =
+* Корректное восстановление настроек плагина из предыдущих версий.
+
 = 1.5.5 =
 * Исправлен вывод UpToLike для страниц записей и статических страниц
 * Добавлено удаление лишних пробелов в поле email на странице статистики

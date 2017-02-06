@@ -7,8 +7,12 @@ class UptolikeSettingsPage {
     public function __construct() {
         add_action('admin_menu', array($this, 'uptolike_add_plugin_page'));
         add_action('admin_init', array($this, 'uptolike_page_init'));
-        $this->options = get_option('uptolike_options');
-    }
+        $this->options = get_option('my_option_name');
+        if (!is_bool($this->options)) {
+            update_option('uptolike_options', $this->options);
+            delete_option('my_option_name');
+        }
+        $this->options = get_option('uptolike_options');    }
 
     public function uptolike_add_plugin_page() {
         add_options_page('UpToLike Settings', 'UpToLike', 'manage_options', $this->settings_page_name, array($this, 'uptolike_create_admin_page'));
@@ -506,9 +510,6 @@ function uptolike_get_widget_code($url = '') {
     $widget_code = $options['widget_code'];
     $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0, strpos($_SERVER["SERVER_PROTOCOL"], '/'))) . '://';
     if ($url == '') {
-        if (is_single() || is_page()) {
-            $url = get_permalink();
-        } else
             $url = $protocol . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
     }
 

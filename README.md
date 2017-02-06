@@ -1,9 +1,9 @@
-#Uptolike Social Share Buttons
-Contributors: Uptolike Team
-Tags: +1, UpToLike, AddThis, social buttons, bookmark, bookmarking, like, share, share button, sharing, social bookmarking, social bookmarks, кнопки соцсетей, социальные кнопки
-Requires at least: 3.0.1
-Tested up to: 4.7
-Stable tag: 1.5.7
+#Uptolike Social Share Buttons  
+Contributors: Uptolike Team  
+Tags: +1, UpToLike, AddThis, social buttons, bookmark, bookmarking, like, share, share button, sharing, social bookmarking, social bookmarks, кнопки соцсетей, социальные кнопки  
+Requires at least: 3.0.1  
+Tested up to: 4.7.2  
+Stable tag: 1.5.7  
 
 ##Description
 

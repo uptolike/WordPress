@@ -188,7 +188,7 @@ Answers to Frequently Asked Questions you can find at http://uptolike.ru/faq
 #### 1.3.9
 * Enhancement: settings
 
-####1.3.8
+#### 1.3.8
 * Enhancement: new control panel
 * Bug fix
 

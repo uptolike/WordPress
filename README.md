@@ -1,4 +1,4 @@
-#Uptolike Social Share Buttons  
+#Uptolike Social Share Buttons
 Contributors: Uptolike Team  
 Tags: +1, UpToLike, AddThis, social buttons, bookmark, bookmarking, like, share, share button, sharing, social bookmarking, social bookmarks, кнопки соцсетей, социальные кнопки  
 Requires at least: 3.0.1  
@@ -76,6 +76,7 @@ UpToLike is compatible with 25 popular social networking sites. It supports the 
 * Gathering unique statistics of social media activity
 
 ##Installation
+
 1. Выберите Плагины -> Добавить новый
 2. В строке поиска введите Uptolike
 3. Установите плагин *Uptolike Social Share Buttons* и активируйте
@@ -93,6 +94,7 @@ UpToLike is compatible with 25 popular social networking sites. It supports the 
 6. Enjoy!
 
 ##Frequently Asked Questions
+
 Ответы на часто задаваемые вопросы вы можете найти на http://uptolike.ru/faq
 
 ***
@@ -100,11 +102,13 @@ UpToLike is compatible with 25 popular social networking sites. It supports the 
 Answers to Frequently Asked Questions you can find at http://uptolike.ru/faq
 
 ##Screenshots
+
 1. Customizing sharing buttons
 2. Buttons appearance
 3. Traffic and sharing statistics
 
 ##Changelog
+
 ####1.5.9
 * Исправленна генерация ссылок для защищённых сайтов с протоколом https
 

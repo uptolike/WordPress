@@ -138,7 +138,7 @@ Answers to Frequently Asked Questions you can find at http://uptolike.ru/faq
 #### 1.5.2
 * HOTFIX
 
-####1.5.1
+#### 1.5.1
 * Исправлена ошибка генерации ссылки со статических страниц
 
 #### 1.5.0

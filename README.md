@@ -1,11 +1,12 @@
-#Uptolike Social Share Buttons
+# Uptolike Social Share Buttons
+
 Contributors: Uptolike Team  
 Tags: +1, UpToLike, AddThis, social buttons, bookmark, bookmarking, like, share, share button, sharing, social bookmarking, social bookmarks, кнопки соцсетей, социальные кнопки  
 Requires at least: 3.0.1  
 Tested up to: 4.7.4  
 Stable tag: 1.5.9  
 
-##Description
+## Description
 
 **Uptolike Social Share Buttons - бесплатный русскоязычный плагин социальных кнопок**
 
@@ -75,7 +76,7 @@ UpToLike is compatible with 25 popular social networking sites. It supports the 
 * Automatic text selection: the system gives you the option to share a highlighted piece of text on a social network
 * Gathering unique statistics of social media activity
 
-##Installation
+## Installation
 
 1. Выберите Плагины -> Добавить новый
 2. В строке поиска введите Uptolike
@@ -93,7 +94,7 @@ UpToLike is compatible with 25 popular social networking sites. It supports the 
 5. Request and fill the secret key field, if you want to receive the statistics
 6. Enjoy!
 
-##Frequently Asked Questions
+## Frequently Asked Questions
 
 Ответы на часто задаваемые вопросы вы можете найти на http://uptolike.ru/faq
 
@@ -101,59 +102,59 @@ UpToLike is compatible with 25 popular social networking sites. It supports the 
 
 Answers to Frequently Asked Questions you can find at http://uptolike.ru/faq
 
-##Screenshots
+## Screenshots
 
 1. Customizing sharing buttons
 2. Buttons appearance
 3. Traffic and sharing statistics
 
-##Changelog
+## Changelog
 
-####1.5.9
+#### 1.5.9
 * Исправленна генерация ссылок для защищённых сайтов с протоколом https
 
-####1.5.8
+#### 1.5.8
 * Добавлен перевод на Чешский язык
 
-####1.5.7
+#### 1.5.7
 * Исправленна генерация ссылок при расположении виджета Боковой панелью
 
-####1.5.6
+#### 1.5.6
 * Корректное восстановление настроек плагина из предыдущих версий
 
-####1.5.5
+#### 1.5.5
 * Исправлен вывод UpToLike для страниц записей и статических страниц
 * Добавлено удаление лишних пробелов в поле email на странице статистики
 * Все ссылки в плагине исправлены на абсолютные
 * Исправлен WidgetClass name notice
 * Code refactoring
 
-####1.5.4
+#### 1.5.4
 * Исправлен некорректный вывод шорткода
 
-####1.5.3
+#### 1.5.3
 * HOTFIX
 
-####1.5.2
+#### 1.5.2
 * HOTFIX
 
 ####1.5.1
 * Исправлена ошибка генерации ссылки со статических страниц
 
-####1.5.0
+#### 1.5.0
 * HOTFIX
 
-####1.4.9
+#### 1.4.9
 * HOTFIX
 * Исправлен баг отображением плагина на специальных страницах
 * Добавлена настройка вывода плагина на отдельных записях(товаров)
 
-####1.4.8
+#### 1.4.8
 * HOTFIX
 * Исправлен баг с [шорткодом]
 * Исправлен баг с настройками
 
-####1.4.7
+#### 1.4.7
 * Исправлена логика вывода виджета на всех страницах
 * Исправлен баг с ориентацией панели
 * Исправлен баг с дублированием параметра data-url
@@ -161,94 +162,94 @@ Answers to Frequently Asked Questions you can find at http://uptolike.ru/faq
 * Рефакторинг кода
 * Реструктуризация плагина
 
-####1.4.6
+#### 1.4.6
 * Исправлено корректное отображение виджета на главной странице
 
-####1.4.5
+#### 1.4.5
 * Code refactor
 * Minor fix
 
-####1.4.4
+#### 1.4.4
 * Bug fix
 
-####1.4.3
+#### 1.4.3
 * Bug fix
 
-####1.4.2
+#### 1.4.2
 * Bug fix
 * Enhancement: rename
 
-####1.4.1
+#### 1.4.1
 * Enhancement: settings
 
-####1.4.0
+#### 1.4.0
 * Bug fix
 
-####1.3.9
+#### 1.3.9
 * Enhancement: settings
 
 ####1.3.8
 * Enhancement: new control panel
 * Bug fix
 
-####1.3.7
+#### 1.3.7
 * Enhancement: security
 
-####1.3.6
+#### 1.3.6
 * Bug fix
 
-####1.3.5
+#### 1.3.5
 * Enhancement: new align and shortcode settings
 
-####1.3.4
+#### 1.3.4
 * Bug fix
 
-####1.3.3
+#### 1.3.3
 * Enhancement
 
-####1.3.2
+#### 1.3.2
 * Bug fix
 
-####1.3.1
+#### 1.3.1
 * Enhancement: widget area
 
-####1.3.0
+#### 1.3.0
 * Bug fix
 
-####1.2.9
+#### 1.2.9
 * Bug Fix: minor changes
 
-####1.2.8
+#### 1.2.8
 * Enhancement: new settings
 * Bug Fix
 
-####1.2.7
+#### 1.2.7
 * Bug Fix: minor bug fixes
 
-####1.2.6
+#### 1.2.6
 * Enhancement: new feature - on archive
 
-####1.2.5
+#### 1.2.5
 * Bug fix: minor bugs with short tag option 
 
-####1.2.4
+#### 1.2.4
 * Enhancement: new feature - on static page
 * Enhancement: security
 * Bug fix 
 
-####1.2.3
+#### 1.2.3
 * Bug fix: show on main 
 
-####1.2.2
+#### 1.2.2
 * Enhancement: cut spaces in cryptkey field
 * Enhancement: feedback link
 * Enhancement: access to plugins by top menu item
 
-####1.2.1
+#### 1.2.1
 * Bug Fix: minor bug fixes
 
-####1.2.0
+#### 1.2.0
 * Enhancement: user registration.
 
-####1.0.0
+#### 1.0.0
 * Initial release
